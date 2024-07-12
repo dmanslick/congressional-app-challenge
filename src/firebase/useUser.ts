@@ -20,9 +20,9 @@ export const useUser = () => {
         return unsubscribe
     }, [])
 
-    useEffect(() => {
-        console.log(user)
-    }, [user])
+    // useEffect(() => {
+    //     console.log(user)
+    // }, [user])
 
     return { user, idToken }
 }

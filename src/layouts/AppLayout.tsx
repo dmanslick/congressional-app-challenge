@@ -1,47 +1,65 @@
-import React, { useEffect } from 'react'
-import { Box } from '@chakra-ui/react'
-import { Bot, Camera, CircleHelp, Home, MessageSquare } from 'lucide-react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import React from 'react'
+import { Box, Circle } from '@chakra-ui/react'
+import { Bot, Camera, CircleHelp, Home, Menu, MessageSquare } from 'lucide-react'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useUser } from '../firebase/useUser'
 
 interface NavLink {
     to: string,
+    ariaLabel: string,
     component: React.ReactNode
 }
 
 const navLinks: NavLink[] = [
     {
         to: '/app/help',
-        component: <CircleHelp />
+        ariaLabel: 'Help link',
+        component: <CircleHelp />,
     },
     {
         to: '/app/camera',
+        ariaLabel: 'Camera link',
         component: <Camera />
     },
     {
         to: '/app',
+        ariaLabel: 'Home link',
         component: <Home />
     },
     {
         to: '/app/chatbot',
+        ariaLabel: 'AI Chat link',
         component: <Bot />
     },
     {
         to: '/app/community',
+        ariaLabel: 'Community link',
         component: <MessageSquare />
     }
 ]
 
+const inactiveColor = '#bababa'
+
 export default function AppLayout() {
+    const { user } = useUser()
     const location = useLocation()
+    const navigate = useNavigate()
+
+    if (user == null) navigate('/', { replace: true })
 
     return (
-        <Box display='flex' flexDir='column' justifyContent='space-between' h='100vh'>
+        <Box h='100vh' bg='#EEEEEE'>
+            <Box h='56px' bg='white' display='flex' flexDir='row' justifyContent='space-between' alignItems='center' position='fixed' top={0} w='100%' maxW={448} px={4}>
+                <Circle color={inactiveColor}>
+                    <Menu />
+                </Circle>
+            </Box>
             <Outlet />
-            <Box h='56px' bg='white' borderTopRadius='16px' display='flex' flexDir='row' justifyContent='space-around' alignItems='center'>
-                {navLinks.map(({ to, component }) => {
+            <Box h='56px' bg='white' display='flex' flexDir='row' justifyContent='space-around' alignItems='center' position='fixed' bottom={0} w='100%' maxW={448}>
+                {navLinks.map(({ to, component, ariaLabel }) => {
                     return (
-                        <Link to={to}>
-                            <Box color={String(location.pathname == to && 'red')}>
+                        <Link to={to} aria-label={ariaLabel}>
+                            <Box color={String(location.pathname != to && inactiveColor)}>
                                 {component}
                             </Box>
                         </Link>

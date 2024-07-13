@@ -24,7 +24,7 @@ export default function CameraPage() {
         const base64String = image.dataUrl?.split('base64,')[1]
 
         if (base64String?.length as number > 1_500_000) {
-
+            setError('Image file size is too big')
             return
         }
 
@@ -41,6 +41,7 @@ export default function CameraPage() {
                 setError('Error: Response not status code 200')
                 return
             }
+
             const json = await response.json()
             setSrc(image.dataUrl as string)
             setPredictions(json)
@@ -52,30 +53,28 @@ export default function CameraPage() {
     return (
         <Center h='100vh' maxW='336px' mx='auto'>
             {typeof src != 'string' ? (
-                <Button
-                    bg='black'
-                    color='white'
-                    _hover={{ background: 'blackAlpha.900' }}
-                    _active={{ background: 'blackAlpha.800' }}
-                    onClick={takePicture}
-                    display='flex'
-                >
-                    <Box mr={2}>
-                        <CameraIcon />
-                    </Box>
-                    Take Photo
-                </Button>
+                <Stack>
+                    <Button
+                        bg='black'
+                        color='white'
+                        _hover={{ background: 'blackAlpha.900' }}
+                        _active={{ background: 'blackAlpha.800' }}
+                        onClick={takePicture}
+                        display='flex'
+                    >
+                        <Box mr={2}>
+                            <CameraIcon />
+                        </Box>
+                        Take Photo
+                    </Button>
+                    <Text color='red'>{error}</Text>
+                </Stack>
             ) : (
                 <Card>
                     <CardBody>
                         <Image src={src} alt='Image' borderRadius={6} height={256} width={300} objectFit='cover' />
                         <Heading size='lg' textAlign='center' my='12px'>Feeling</Heading>
                         <Stack textAlign='center'>
-                            {/* {predictions?.sort((a, b) => b.confidence - a.confidence).map(({ emotion, confidence }) => {
-                                return (
-                                    <Text>{(confidence * 100).toFixed(2)}% {emotion}</Text>
-                                )
-                            })} */}
                             {predictions?.sort((a, b) => b.confidence - a.confidence).map(({ emotion, confidence }) => {
                                 return (
                                     <>

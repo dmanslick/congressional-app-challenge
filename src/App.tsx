@@ -1,4 +1,3 @@
-import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'

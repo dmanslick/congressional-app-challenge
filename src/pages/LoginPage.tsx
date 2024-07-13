@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Box, Button, Input, Link, Stack, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../firebase/auth'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Camera, CameraResultType } from '@capacitor/camera'
 import { Box, Button, Card, CardBody, Center, Heading, Image, Progress, Stack, Text } from '@chakra-ui/react'
 import { CameraIcon } from 'lucide-react'

@@ -1,10 +1,12 @@
-import { Button, Center } from '@chakra-ui/react'
-import { logout } from '../firebase/auth'
+import { Center } from '@chakra-ui/react'
+import { useUser } from '../firebase/useUser'
 
 export default function HomePage() {
+    const { user } = useUser()
+
     return (
         <Center h='100vh'>
-            <Button colorScheme='red' onClick={logout}>Logout</Button>
+            <p>Hello, {user?.displayName}!</p>
         </Center>
     )
 }

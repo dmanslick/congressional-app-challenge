@@ -7,6 +7,7 @@ import ChatBotPage from './pages/ChatBotPage'
 import HelpPage from './pages/HelpPage'
 import CameraPage from './pages/CameraPage'
 import CommunityPage from './pages/CommunityPage'
+import SignUpPage from './pages/SignUpPage'
 
 export default function App() {
     return (
@@ -14,6 +15,7 @@ export default function App() {
             <HashRouter>
                 <Routes>
                     <Route path='/' Component={LoginPage} />
+                    <Route path='/register' Component={SignUpPage} />
                     <Route path='/app' Component={AppLayout}>
                         <Route path='help' Component={HelpPage} />
                         <Route path='camera' Component={CameraPage} />

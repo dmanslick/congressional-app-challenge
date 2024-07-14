@@ -9,20 +9,20 @@ export const useUser = () => {
     useEffect(() => {
         const unsubscribe = () => {
             auth.onAuthStateChanged(user => {
+                if (user != null && user.displayName == null) {
+                    const displayName = sessionStorage.getItem('displayName')
+                    user = { ...user, displayName }
+                }
                 setUser(user)
                 auth.currentUser?.getIdToken(true).then(token => {
                     setIdToken(token)
                 })
             })
-
         }
 
         return unsubscribe
     }, [])
 
-    // useEffect(() => {
-    //     console.log(user)
-    // }, [user])
 
     return { user, idToken }
 }

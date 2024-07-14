@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Camera, CameraResultType } from '@capacitor/camera'
 import { Box, Button, Card, CardBody, Center, Heading, Image, Progress, Stack, Text } from '@chakra-ui/react'
 import { CameraIcon } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 interface Prediction {
     emotion: string
@@ -12,41 +13,46 @@ export default function CameraPage() {
     const [src, setSrc] = useState<undefined | string>(undefined)
     const [predictions, setPredictions] = useState<Prediction[]>()
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const takePicture = async () => {
-        const image = await Camera.getPhoto({
-            quality: 90,
-            allowEditing: true,
-            resultType: CameraResultType.DataUrl,
-            saveToGallery: true
-        })
-
-        const base64String = image.dataUrl?.split('base64,')[1]
-
-        if (base64String?.length as number > 1_500_000) {
-            setError('Image file size is too big')
-            return
-        }
-
         try {
-            const response = await fetch(import.meta.env.VITE_PREDICT_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ imageData: base64String })
+            const image = await Camera.getPhoto({
+                quality: 90,
+                allowEditing: true,
+                resultType: CameraResultType.DataUrl,
+                saveToGallery: true
             })
 
-            if (!response.ok) {
-                setError('Error: Response not status code 200')
+            const base64String = image.dataUrl?.split('base64,')[1]
+
+            if (base64String?.length as number > 1_500_000) {
+                setError('Image file size is too big')
                 return
             }
 
-            const json = await response.json()
-            setSrc(image.dataUrl as string)
-            setPredictions(json)
-        } catch (e) {
-            setError('Error')
+            try {
+                const response = await fetch(import.meta.env.VITE_PREDICT_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ imageData: base64String })
+                })
+
+                if (!response.ok) {
+                    setError('Error: Response not status code 200')
+                    return
+                }
+
+                const json = await response.json()
+                setSrc(image.dataUrl as string)
+                setPredictions(json)
+            } catch (e) {
+                setError('Error')
+            }
+        } catch (e: any) {
+            if (e.message == 'User cancelled photos app') navigate('/app')
         }
     }
 

@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useInsertionEffect, useState } from 'react'
 import { Camera, CameraResultType } from '@capacitor/camera'
-import { Box, Button, Card, CardBody, Center, Heading, Image, Progress, Stack, Text } from '@chakra-ui/react'
-import { CameraIcon } from 'lucide-react'
+import { AbsoluteCenter, Card, CardBody, Center, Heading, Image, Progress, Spinner, Stack, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
 interface Prediction {
@@ -12,11 +11,14 @@ interface Prediction {
 export default function CameraPage() {
     const [src, setSrc] = useState<undefined | string>(undefined)
     const [predictions, setPredictions] = useState<Prediction[]>()
-    const [error, setError] = useState('')
+    const [error, setError] = useState<any>('')
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const takePicture = async () => {
         try {
+            setError(false)
+            setLoading(true)
             const image = await Camera.getPhoto({
                 quality: 90,
                 allowEditing: true,
@@ -49,16 +51,22 @@ export default function CameraPage() {
                 setSrc(image.dataUrl as string)
                 setPredictions(json)
             } catch (e) {
+                setLoading(false)
                 setError('Error')
             }
         } catch (e: any) {
             if (e.message == 'User cancelled photos app') navigate('/app')
+            setLoading(false)
         }
     }
 
+    useInsertionEffect(() => {
+        takePicture()
+    }, [])
+
     return (
         <Center h='100vh' maxW='336px' mx='auto'>
-            {typeof src != 'string' ? (
+            {/* {typeof src != 'string' ? (
                 <Stack>
                     <Button
                         bg='black'
@@ -76,6 +84,34 @@ export default function CameraPage() {
                     <Text color='red'>{error}</Text>
                 </Stack>
             ) : (
+                <Card>
+                    <CardBody>
+                        <Image src={src} alt='Image' borderRadius={6} height={256} width={300} objectFit='cover' />
+                        <Heading size='lg' textAlign='center' my='12px'>Feeling</Heading>
+                        <Stack textAlign='center'>
+                            {predictions?.sort((a, b) => b.confidence - a.confidence).map(({ emotion, confidence }) => {
+                                return (
+                                    <>
+                                        <Text>{emotion}</Text>
+                                        <Progress value={Number((confidence * 100).toFixed(2))} />
+                                    </>
+                                )
+                            })}
+                        </Stack>
+                    </CardBody>
+                </Card>
+            )} */}
+            {loading && (
+                <AbsoluteCenter>
+                    <Spinner color='blue.500' />
+                </AbsoluteCenter>
+            )}
+            {error && (
+                <AbsoluteCenter>
+                    <Text color='red'>{error}</Text>
+                </AbsoluteCenter>
+            )}
+            {typeof src == 'string' && (
                 <Card>
                     <CardBody>
                         <Image src={src} alt='Image' borderRadius={6} height={256} width={300} objectFit='cover' />

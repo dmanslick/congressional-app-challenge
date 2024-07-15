@@ -16,3 +16,9 @@ interface Comment {
     username: string,
     content: string
 }
+
+interface CreateCommentArgs {
+    id: string
+    username: string
+    content: string
+}

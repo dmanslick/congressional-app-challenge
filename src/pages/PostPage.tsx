@@ -1,10 +1,13 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure } from '@chakra-ui/react'
-import { useQuery } from '@tanstack/react-query'
+import { FormEvent, useState } from 'react'
+import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
 import { Link as ChakraLink } from '@chakra-ui/react'
 import { ChevronLeft, MessageSquareIcon } from 'lucide-react'
 import CommentCard from '../components/CommentCard'
+import { createComment } from '../utils/createComment'
+import { useUser } from '../firebase/useUser'
 
 type Params = {
     id: string
@@ -15,12 +18,36 @@ const maxW = { base: '300px', sm: '400px', md: '700px' }
 export default function PostPage() {
     const { id } = useParams<Params>()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [content, setContent] = useState('')
+    const queryClient = useQueryClient()
+    const { user } = useUser()
+
     const post = useQuery({
         queryKey: ['post', id],
         queryFn: () => getPost(id as string),
         refetchInterval: 1000 * 30,
         staleTime: 1000 * 60 * 5,
     })
+
+    const { mutate, error: mutateError } = useMutation({
+        mutationFn: createComment,
+        onSuccess: ({ username, content }: any) => queryClient.setQueryData(['post', id], { username, content })
+    })
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault()
+        console.log('shit')
+        // @ts-ignore
+        mutate({ id, content, username: user?.displayName })
+    }
+
+    if (post.error) {
+        return (
+            <AbsoluteCenter>
+                <Text color='red'>Error</Text>
+            </AbsoluteCenter>
+        )
+    }
 
     return (
         <Box pt='56px'>
@@ -57,11 +84,11 @@ export default function PostPage() {
                         <ModalCloseButton />
                         <ModalBody>
                             <label htmlFor='comment' className='visually-hidden'>Comment Content</label>
-                            <Textarea placeholder='My Comment' id='comment' />
+                            <Textarea placeholder='My Comment' id='comment' onChange={e => setContent(e.target.value)} />
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>Submit</Button>
+                            <Button colorScheme='blue' mr={3} onClick={handleSubmit}>Submit</Button>
                             <Button colorScheme='red' onClick={onClose}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>

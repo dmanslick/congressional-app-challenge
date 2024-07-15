@@ -12,7 +12,7 @@ export default function AppLayout() {
     if (user == null) navigate('/', { replace: true })
 
     return (
-        <Box h='100vh' bg='#EEEEEE'>
+        <Box minH='100vh' bg='#EEEEEE'>
             <TopBar />
             <Outlet />
             <BottomBar />

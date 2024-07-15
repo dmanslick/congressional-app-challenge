@@ -12,7 +12,7 @@ interface Post {
     comments: string[]
 }
 
-interface Comment {
+interface PostComment {
     username: string,
     content: string
 }

@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import AppLayout from './layouts/AppLayout'
 import HomePage from './pages/HomePage'
@@ -17,7 +17,7 @@ export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <ChakraProvider>
-                <HashRouter>
+                <BrowserRouter>
                     <Routes>
                         <Route path='/' Component={LoginPage} />
                         <Route path='/register' Component={SignUpPage} />
@@ -30,7 +30,7 @@ export default function App() {
                             <Route path='post/:id' Component={PostPage} />
                         </Route>
                     </Routes>
-                </HashRouter>
+                </BrowserRouter>
             </ChakraProvider>
         </QueryClientProvider>
     )

@@ -45,9 +45,11 @@ export default function BottomBar() {
     return (
         <Box h='56px' bg='white' display='flex' flexDir='row' justifyContent='space-around' alignItems='center' position='fixed' bottom={0} w='100%'>
             {navLinks.map(({ to, component, ariaLabel }) => {
+                let condition = location.pathname == to
+                if (to == '/app/community') condition = condition || location.pathname.includes('/app/post')
                 return (
                     <Link to={to} aria-label={ariaLabel}>
-                        <Box color={String(location.pathname == to ? activeColor : inactiveColor)}>
+                        <Box color={String(condition ? activeColor : inactiveColor)}>
                             {component}
                         </Box>
                     </Link>

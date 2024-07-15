@@ -11,3 +11,8 @@ interface Post {
     tags: string[]
     comments: string[]
 }
+
+interface Comment {
+    username: string,
+    content: string
+}

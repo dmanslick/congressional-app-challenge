@@ -25,8 +25,9 @@ export default function PostPage() {
     const post = useQuery({
         queryKey: ['post', id],
         queryFn: () => getPost(id as string),
-        refetchInterval: 1000 * 30,
-        staleTime: 1000 * 60 * 5,
+        // refetchInterval: 1000 * 30,
+        refetchOnMount: 'always',
+        staleTime: 1000 * 60,
     })
 
     const { mutate, error: mutateError } = useMutation({
@@ -39,7 +40,6 @@ export default function PostPage() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        console.log('shit')
         // @ts-ignore
         if (content != '') mutate({ id, content, username: user?.displayName })
         onClose()
@@ -61,11 +61,9 @@ export default function PostPage() {
         )
     }
 
-    console.log(post.data)
-
     return (
         <Box pt='56px'>
-            <Box ml={2} my={4}>
+            <Box ml={2} my={4} w='fit-content'>
                 <ChakraLink as={Link} to='/app/community' display='flex' color='blue.500' alignItems='center'>
                     <ChevronLeft height={24} width={24} /><span>Back</span>
                 </ChakraLink>
@@ -77,14 +75,14 @@ export default function PostPage() {
                 <CardBody mt={-6}>
                     <Text color='grey'>{post.data?.content}</Text>
                 </CardBody>
-                <CardFooter ml='auto' color='#bababa' display='flex' flexDir='row' alignItems='center' gap={2}>
+                <CardFooter mt={-6} ml='auto' color='#bababa' display='flex' flexDir='row' alignItems='center' gap={2}>
                     <MessageSquareIcon /><Text>{post.data?.comments.length}</Text>
                 </CardFooter>
             </Card>
             <Center>
                 <Button type='submit' colorScheme='blue' w={cardMaxW} mt={4} onClick={onOpen}>Leave a comment</Button>
             </Center>
-            <Box pb={32}>
+            <Box mt={8} pb={32}>
                 {post.data?.comments.map(comment => {
                     const commentObj = JSON.parse(comment) as PostComment
                     return (

@@ -11,8 +11,9 @@ export default function CommunityPage() {
     const posts = useQuery({
         queryKey: ['posts'],
         queryFn: () => getPosts(),
-        refetchInterval: 1000 * 30,
-        staleTime: 10000
+        // refetchInterval: 1000 * 30,
+        refetchOnMount: true,
+        staleTime: 1000 * 60,
     })
 
     const searchPosts = (e: FormEvent) => {

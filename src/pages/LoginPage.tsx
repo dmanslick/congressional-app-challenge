@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Box, Button, Input, Link, Stack, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../firebase/auth'
@@ -13,7 +13,8 @@ export default function LoginPage() {
 
     if (user != null) navigate('/app', { replace: true })
 
-    const handleLogin = () => {
+    const handleLogin = (e: FormEvent) => {
+        e.preventDefault()
         try {
             login(email, password)
         } catch (e) {
@@ -24,11 +25,11 @@ export default function LoginPage() {
     return (
         <Box display='flex' alignItems='center' justifyContent='center' h='100vh' width='calc(100% - 32px)' marginInline='auto'>
             <Box>
-                <Stack gap='1rem' w='100%'>
+                <Stack gap='1rem' w='100%' as='form' onSubmit={handleLogin}>
                     <Text fontSize='x-large' fontWeight={500} textAlign='center'>Please Login</Text>
                     <Input placeholder='Email' type='email' onChange={e => setEmail(e.target.value)} />
                     <Input placeholder='Password' type='password' onChange={e => setPassword(e.target.value)} />
-                    <Button colorScheme='blue' textAlign='center' onClick={handleLogin}>Login</Button>
+                    <Button colorScheme='blue' textAlign='center' type='submit'>Login</Button>
                     <Link as={RouterLink} to='/register' fontSize='small' color='#3182ce' w='fit-content'>Sign Up</Link>
                 </Stack>
             </Box>

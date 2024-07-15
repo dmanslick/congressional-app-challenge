@@ -1,12 +1,12 @@
-import { Center } from '@chakra-ui/react'
+import { AbsoluteCenter, Text } from '@chakra-ui/react'
 import { useUser } from '../firebase/useUser'
 
 export default function HomePage() {
     const { user } = useUser()
 
     return (
-        <Center h='100vh'>
-            <p>Hello, {user?.displayName}!</p>
-        </Center>
+        <AbsoluteCenter>
+            <Text fontSize='3xl' fontWeight='medium'>Hello {user?.displayName}!</Text>
+        </AbsoluteCenter>
     )
 }

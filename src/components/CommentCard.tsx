@@ -1,10 +1,10 @@
-import { Card, CardBody, CardHeader, Center, Text } from '@chakra-ui/react'
+import { Card, CardBody, CardHeader, Text } from '@chakra-ui/react'
 import { cardMaxW } from '../utils/constants'
 
 export default function CommentCard({ data }: { data: PostComment }) {
     return (
         <>
-            <Card maxW={cardMaxW} mx='auto' mt='8'>
+            <Card maxW={cardMaxW} mx='auto' mt='4'>
                 <CardHeader>
                     <Text>{data.username}</Text>
                 </CardHeader>

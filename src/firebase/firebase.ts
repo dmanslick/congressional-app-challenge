@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core'
 import { initializeApp } from 'firebase/app'
-import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth'
+import { browserLocalPersistence, getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const initAuth = () => {
     let auth
     if (Capacitor.isNativePlatform()) {
         auth = initializeAuth(app, {
-            persistence: indexedDBLocalPersistence
+            persistence: browserLocalPersistence
         })
     } else {
         auth = getAuth(app)

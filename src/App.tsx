@@ -10,6 +10,7 @@ import CommunityPage from './pages/CommunityPage'
 import SignUpPage from './pages/SignUpPage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PostPage from './pages/PostPage'
+import UnauthLayout from './layouts/UnauthLayout'
 
 const queryClient = new QueryClient()
 
@@ -19,8 +20,10 @@ export default function App() {
             <ChakraProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/' Component={LoginPage} />
-                        <Route path='/register' Component={SignUpPage} />
+                        <Route Component={UnauthLayout}>
+                            <Route path='/' Component={LoginPage} />
+                            <Route path='/register' Component={SignUpPage} />
+                        </Route>
                         <Route path='/app' Component={AppLayout}>
                             <Route path='help' Component={HelpPage} />
                             <Route path='camera' Component={CameraPage} />

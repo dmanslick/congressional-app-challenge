@@ -1,17 +1,12 @@
 import { Stack, Input, Button, Box, Text, Link } from '@chakra-ui/react'
 import { FormEvent, useState } from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
-import { useUser } from '../firebase/useUser'
+import { Link as RouterLink } from 'react-router-dom'
 import { register } from '../firebase/auth'
 
 export default function SignUpPage() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
-    const { user } = useUser()
-
-    if (user != null) navigate('/app', { replace: true })
 
     const handleRegister = (e: FormEvent) => {
         e.preventDefault()

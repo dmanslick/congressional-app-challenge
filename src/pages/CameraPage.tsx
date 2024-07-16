@@ -12,13 +12,12 @@ export default function CameraPage() {
     const [src, setSrc] = useState<undefined | string>(undefined)
     const [predictions, setPredictions] = useState<Prediction[]>()
     const [error, setError] = useState<any>('')
-    const [loading, setLoading] = useState(false)
+    const loading = typeof error == 'string' || typeof src != 'string'
     const navigate = useNavigate()
 
     const takePicture = async () => {
         try {
             setError(false)
-            setLoading(true)
             const image = await Camera.getPhoto({
                 quality: 90,
                 allowEditing: true,
@@ -51,12 +50,10 @@ export default function CameraPage() {
                 setSrc(image.dataUrl as string)
                 setPredictions(json)
             } catch (e) {
-                setLoading(false)
                 setError('Error')
             }
         } catch (e: any) {
             if (e.message == 'User cancelled photos app') navigate('/app')
-            setLoading(false)
         }
     }
 

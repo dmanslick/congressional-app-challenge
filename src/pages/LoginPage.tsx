@@ -1,17 +1,11 @@
 import { FormEvent, useState } from 'react'
 import { Box, Button, Input, Link, Stack, Text } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
 import { login } from '../firebase/auth'
 import { Link as RouterLink } from 'react-router-dom'
-import { useUser } from '../firebase/useUser'
 
 export default function LoginPage() {
-    const { user } = useUser()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
-
-    if (user != null) navigate('/app', { replace: true })
 
     const handleLogin = (e: FormEvent) => {
         e.preventDefault()

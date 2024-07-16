@@ -11,6 +11,7 @@ import SignUpPage from './pages/SignUpPage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PostPage from './pages/PostPage'
 import UnauthLayout from './layouts/UnauthLayout'
+import ModelProvider from './providers/ModelProvider'
 
 const queryClient = new QueryClient()
 
@@ -18,22 +19,24 @@ export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <ChakraProvider>
-                <BrowserRouter>
-                    <Routes>
-                        <Route Component={UnauthLayout}>
-                            <Route path='/' Component={LoginPage} />
-                            <Route path='/register' Component={SignUpPage} />
-                        </Route>
-                        <Route path='/app' Component={AppLayout}>
-                            <Route path='help' Component={HelpPage} />
-                            <Route path='camera' Component={CameraPage} />
-                            <Route index Component={HomePage} />
-                            <Route path='chatbot' Component={ChatBotPage} />
-                            <Route path='community' Component={CommunityPage} />
-                            <Route path='post/:id' Component={PostPage} />
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
+                <ModelProvider>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route Component={UnauthLayout}>
+                                <Route path='/' Component={LoginPage} />
+                                <Route path='/register' Component={SignUpPage} />
+                            </Route>
+                            <Route path='/app' Component={AppLayout}>
+                                <Route path='help' Component={HelpPage} />
+                                <Route path='camera' Component={CameraPage} />
+                                <Route index Component={HomePage} />
+                                <Route path='chatbot' Component={ChatBotPage} />
+                                <Route path='community' Component={CommunityPage} />
+                                <Route path='post/:id' Component={PostPage} />
+                            </Route>
+                        </Routes>
+                    </BrowserRouter>
+                </ModelProvider>
             </ChakraProvider>
         </QueryClientProvider>
     )

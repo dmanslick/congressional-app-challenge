@@ -3,23 +3,20 @@ import { Camera, CameraResultType } from '@capacitor/camera'
 import { AbsoluteCenter, Card, CardBody, Center, Heading, Progress, Spinner, Stack, Text, Image as ChakraImage } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import * as tf from '@tensorflow/tfjs'
+import { useModel } from '../providers/ModelProvider'
 
 interface Prediction {
     emotion: string
     confidence: number
 }
 
-const loadModel = async () => {
-    const loadedModel = await tf.loadGraphModel('/model.json')
-    return loadedModel
-}
 export default function CameraPage() {
     const [src, setSrc] = useState<undefined | string>(undefined)
     const [predictions, setPredictions] = useState<Prediction[]>()
     const [error, setError] = useState<any>('')
     const loading = typeof error == 'string' || typeof src != 'string'
     const navigate = useNavigate()
-    const model = useRef<tf.GraphModel | null>(null)
+    const model = useModel()
 
     const takePicture = async () => {
         try {
@@ -34,23 +31,30 @@ export default function CameraPage() {
             const img = new Image()
             // @ts-ignore
             img.src = image.dataUrl
+            setSrc(image.dataUrl)
 
             img.onload = async () => {
-                console.log(img)
-                // console.log('Image loaded')
                 const tensor = tf.browser.fromPixels(img)
                     .resizeNearestNeighbor([224, 224])
                     .toFloat()
                     .expandDims()
                     .div(255.0)
 
-                console.log('About to predict')
-                try {
-                    const prediction = await model.current?.predict(tensor) as tf.Tensor
-                    console.log(prediction.dataSync())
-                } catch (error) {
-                    console.error('Error during prediction:', error)
-                    setError('Error during prediction')
+                if (model) {
+                    try {
+                        const prediction = await model.predict(tensor) as tf.Tensor
+                        const results = prediction.dataSync()
+                        console.log(results)
+                        const emotions = ['Fear', 'Sad', 'Happy', 'Angry', 'Neutral']
+                        const predictions = emotions.map((emotion, i) => {
+                            return { emotion, confidence: results[i] }
+                        })
+                        console.log(predictions)
+                        setPredictions(predictions)
+                    } catch (error) {
+                        console.error('Error during prediction:', error)
+                        setError('Error during prediction')
+                    }
                 }
             }
 
@@ -63,19 +67,6 @@ export default function CameraPage() {
 
     useInsertionEffect(() => {
         takePicture()
-    }, [])
-
-    useEffect(() => {
-        loadModel().then(loaded => {
-            console.log('loaded')
-            model.current = loaded
-        })
-
-        return () => {
-            if (model.current) {
-                model.current.dispose()
-            }
-        }
     }, [])
 
     return (

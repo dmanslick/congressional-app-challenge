@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.11.5",
     "@ionic/pwa-elements": "^3.3.0",
     "@tanstack/react-query": "^5.51.1",
+    "@tensorflow/tfjs": "^4.20.0",
     "firebase": "^10.12.3",
     "framer-motion": "^11.2.13",
     "lucide-react": "^0.400.0",

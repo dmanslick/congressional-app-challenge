@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core'
 import { initializeApp } from 'firebase/app'
-import { browserLocalPersistence, getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth'
+import { browserLocalPersistence, getAuth, initializeAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {

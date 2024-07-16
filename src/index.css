@@ -2,6 +2,7 @@
 
 * {
 	font-family: 'Inter', sans-serif;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .visually-hidden:not(:focus):not(:active) {

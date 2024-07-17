@@ -1,4 +1,4 @@
-import { useEffect, useInsertionEffect, useRef, useState } from 'react'
+import { useInsertionEffect, useState } from 'react'
 import { Camera, CameraResultType } from '@capacitor/camera'
 import { AbsoluteCenter, Card, CardBody, Center, Heading, Progress, Spinner, Stack, Text, Image as ChakraImage } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
@@ -14,13 +14,15 @@ export default function CameraPage() {
     const [src, setSrc] = useState<undefined | string>(undefined)
     const [predictions, setPredictions] = useState<Prediction[]>()
     const [error, setError] = useState<any>('')
-    const loading = typeof error == 'string' || typeof src != 'string'
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const model = useModel()
 
     const takePicture = async () => {
         try {
             setError(false)
+            setLoading(true)
+            setPredictions([])
             const image = await Camera.getPhoto({
                 quality: 90,
                 allowEditing: true,
@@ -44,16 +46,17 @@ export default function CameraPage() {
                     try {
                         const prediction = await model.predict(tensor) as tf.Tensor
                         const results = prediction.dataSync()
-                        console.log(results)
                         const emotions = ['Fear', 'Sad', 'Happy', 'Angry', 'Neutral']
                         const predictions = emotions.map((emotion, i) => {
                             return { emotion, confidence: results[i] }
                         })
-                        console.log(predictions)
+                        // console.log(predictions)
                         setPredictions(predictions)
+                        setLoading(false)
                     } catch (error) {
                         console.error('Error during prediction:', error)
                         setError('Error during prediction')
+                        setLoading(false)
                     }
                 }
             }
@@ -61,9 +64,9 @@ export default function CameraPage() {
         } catch (e: any) {
             if (e.message === 'User cancelled photos app') navigate('/app')
             setError('Error taking picture')
+            setLoading(false)
         }
     }
-
 
     useInsertionEffect(() => {
         takePicture()
@@ -81,7 +84,7 @@ export default function CameraPage() {
                     <Text color='red'>{error}</Text>
                 </AbsoluteCenter>
             )}
-            {typeof src == 'string' && (
+            {!loading && !error && (
                 <Card>
                     <CardBody>
                         <ChakraImage src={src} alt='Image' borderRadius={6} height={256} width={300} objectFit='cover' />

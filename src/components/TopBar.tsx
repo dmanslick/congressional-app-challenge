@@ -14,7 +14,7 @@ export default function TopBar() {
 
     return (
         <>
-            <Box h='56px' bg='white' display='flex' flexDir='row' alignItems='center' position='fixed' top={0} w='100%' px={2}>
+            <Box h='56px' bg='white' display='flex' flexDir='row' alignItems='center' position='fixed' top={0} w='100%' px={2} zIndex={10} boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'>
                 <Menu autoSelect={false}>
                     <MenuButton
                         as={IconButton}

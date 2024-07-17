@@ -2,7 +2,7 @@
 
 * {
 	font-family: 'Inter', sans-serif;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
 }
 
 .visually-hidden:not(:focus):not(:active) {

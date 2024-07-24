@@ -4,7 +4,6 @@ import App from './App.tsx'
 import './index.css'
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 
-require('dotenv').config(); // Add this line
 
 defineCustomElements(window)
 

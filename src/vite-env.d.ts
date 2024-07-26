@@ -22,3 +22,8 @@ interface CreateCommentArgs {
     username: string
     content: string
 }
+
+interface ChatMessage {
+    role: 'user' | 'model'
+    parts: { text: string }[]
+}

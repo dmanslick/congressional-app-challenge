@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'
 import { useUser } from '../firebase/useUser'
 import { AbsoluteCenter, Box, Button, Flex, Input, Textarea } from '@chakra-ui/react'
@@ -17,21 +17,36 @@ import { SendIcon } from 'lucide-react'
 // }
 
 const gemini = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
-const model = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' })
+const geminiModel = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
 export default function ChatBotPage() {
     const { user } = useUser()
     const [message, setMessage] = useState('')
-    const { data: history } = useQuery<ChatMessage[]>({
+    const [loadingResponse, setLoadingResponse] = useState(false)
+    const { data: history } = useQuery({
         queryKey: ['chatHistory'],
-        queryFn: () => getChatHistory(user?.uid as string) as any as ChatMessage[]
+        queryFn: () => getChatHistory(user?.uid as string)
     })
 
-    const sendMessage = async () => {
-        const response = await model.startChat({ history })
+    const { mutate } = useMutation({
+        mutationFn: async () => { },
+        onSuccess: (_, variables) => {
+
+        },
+    })
+
+    const chat = useMemo(() => geminiModel.startChat(), [])
+
+    const sendMessage = async (e: FormEvent) => {
+        e.preventDefault()
+        setLoadingResponse(true)
+        const result = await chat.sendMessage(message)
+        setLoadingResponse(false)
     }
 
     useEffect(() => {
+        console.log(user?.uid)
+
         return () => {
             console.log('cleanup')
         }

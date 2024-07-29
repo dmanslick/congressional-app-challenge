@@ -2,7 +2,6 @@ import { Card, CardBody, CardFooter, CardHeader, Tag, Text, Wrap, WrapItem } fro
 import { MessageSquareIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-
 export default function PostCard(props: Post) {
     return (
         <Card as={Link} to={`/app/post/${props.id}`} maxW={320} w='100%' mx='auto' userSelect='none' _active={{ bg: '#F7F7F7' }} _hover={{ bg: '#F7F7F7' }}>

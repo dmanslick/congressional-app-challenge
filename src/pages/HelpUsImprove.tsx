@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Center, Heading } from '@chakra-ui/react';
+import { Box, Text, Center, Heading, Stack } from '@chakra-ui/react';
 
 const HelpUsImprove = () => {
   const googleFormEmbedCode = `
@@ -7,13 +7,15 @@ const HelpUsImprove = () => {
 
   return (
     <Center h="100vh" maxW="container.lg" py={8}>
-      <Box textAlign="center" mb={8}>
+      <Stack spacing={8} textAlign="center">
         <Heading>Help Us Improve</Heading>
         <Text>
-          Submit photos of your child expressing different emotions to help us
-          train our emotion recognition model.
+          Please help us improve our emotion recognition model by submitting photos
+          of your child expressing different emotions. This data will be used to
+          train and refine our model, ultimately leading to a more accurate and
+          reliable experience for everyone.
         </Text>
-      </Box>
+      </Stack>
       <div dangerouslySetInnerHTML={{ __html: googleFormEmbedCode }} />
     </Center>
   );

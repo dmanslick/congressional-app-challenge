@@ -13,6 +13,7 @@ import PostPage from './pages/PostPage'
 import UnauthLayout from './layouts/UnauthLayout'
 import ModelProvider from './providers/ModelProvider'
 
+
 const queryClient = new QueryClient()
 
 export default function App() {

@@ -3,7 +3,7 @@ import { Box, Text, Center, Heading, Stack } from '@chakra-ui/react';
 
 const HelpUsImprove = () => {
   const googleFormEmbedCode = `
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScJomKCwt2ode2yYR8XBlKogdbUDpV8EOa9_NvhrgC4S1jQ9Q/viewform?embedded=true" width="640" height="421" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>  `;
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeGI3ZsOuwaHQI-RPd4MEdAvsEI9u6QZmmEYBcAHg0gCrZbzw/viewform?embedded=true" width="640" height="421" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>  `;
 
   return (
     <Center h="100vh" maxW="container.lg" py={8}>
@@ -22,3 +22,4 @@ const HelpUsImprove = () => {
 };
 
 export default HelpUsImprove;
+

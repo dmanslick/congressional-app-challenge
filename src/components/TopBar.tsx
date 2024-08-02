@@ -1,11 +1,13 @@
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { Box, Menu, MenuButton, IconButton, MenuList, MenuItem, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Portal } from '@chakra-ui/react'
 import { MenuIcon } from 'lucide-react'
 import { logout } from '../firebase/auth'
+import { useNavigate } from 'react-router-dom'
 
 export default function TopBar() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null)
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         onClose()
@@ -24,8 +26,8 @@ export default function TopBar() {
                     />
                     <Portal>
                         <MenuList>
+                            <MenuItem onClick={() => navigate('/app/improve')}>Help Us Improve</MenuItem>
                             <MenuItem>View Profile</MenuItem>
-                            <MenuItem>Help Us Improve</MenuItem>
                             <MenuItem onClick={onOpen}>Logout</MenuItem>
                         </MenuList>
                     </Portal>

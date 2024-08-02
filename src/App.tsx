@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import PostPage from './pages/PostPage'
 import UnauthLayout from './layouts/UnauthLayout'
 import ModelProvider from './providers/ModelProvider'
+import HelpUsImprovePage from './pages/HelpUsImprovePage'
 
 const queryClient = new QueryClient()
 
@@ -27,6 +28,7 @@ export default function App() {
                                 <Route path='/register' Component={SignUpPage} />
                             </Route>
                             <Route path='/app' Component={AppLayout}>
+                                <Route path='improve' Component={HelpUsImprovePage} />
                                 <Route path='help' Component={HelpPage} />
                                 <Route path='camera' Component={CameraPage} />
                                 <Route index Component={HomePage} />

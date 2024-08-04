@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Center, Heading, Stack } from '@chakra-ui/react';
+import { Text, Center, Heading, Stack } from '@chakra-ui/react';
 
 const HelpUsImprove = () => {
   const googleFormEmbedCode = `

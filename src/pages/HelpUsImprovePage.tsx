@@ -4,7 +4,7 @@ import { cardMaxW } from '../utils/constants'
 
 export default function HelpUsImprovePage() {
     return (
-        <Center minH='100vh' mx='auto' py={8}>
+        <Center minH='100vh' mx='auto' mt='56px' py={8}>
             <Stack spacing={8} textAlign='center'>
                 <Heading>Help Us Improve</Heading>
                 <Text maxW={cardMaxW} mx='auto' textAlign='center'>

@@ -1,13 +1,10 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box, Text, Center, Heading, Stack } from '@chakra-ui/react'
 import { cardMaxW } from '../utils/constants'
 
 export default function HelpUsImprovePage() {
-    const googleFormEmbedCode = `
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScJomKCwt2ode2yYR8XBlKogdbUDpV8EOa9_NvhrgC4S1jQ9Q/viewform?embedded=true" width="640" height="421" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>  `
-
     return (
-        <Center h='100vh' mx='auto' py={8}>
+        <Center minH='100vh' mx='auto' py={8}>
             <Stack spacing={8} textAlign='center'>
                 <Heading>Help Us Improve</Heading>
                 <Text maxW={cardMaxW} mx='auto' textAlign='center'>
@@ -21,11 +18,10 @@ export default function HelpUsImprovePage() {
                     mx='auto'
                 >
                     <iframe
-                        src="https://docs.google.com/forms/d/e/1FAIpQLScJomKCwt2ode2yYR8XBlKogdbUDpV8EOa9_NvhrgC4S1jQ9Q/viewform?embedded=true"
+                        src='https://docs.google.com/forms/d/e/1FAIpQLSeGI3ZsOuwaHQI-RPd4MEdAvsEI9u6QZmmEYBcAHg0gCrZbzw/viewform?embedded=true'
                         style={{
-                            // marginInline: 'auto',
-                            height: '100%',
-                            width: '100%'
+                            height: 1212,
+                            width: '100%',
                         }}
                     >
                         Loading…

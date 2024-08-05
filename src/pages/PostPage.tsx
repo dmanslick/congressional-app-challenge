@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
 import { Link as ChakraLink } from '@chakra-ui/react'
 import { ChevronLeft, MessageSquareIcon } from 'lucide-react'
@@ -21,6 +21,7 @@ export default function PostPage() {
     const queryClient = useQueryClient()
     const { user } = useUser()
     const isSubmitDisabled = content == ''
+    const navigate = useNavigate()
 
     const post = useQuery({
         queryKey: ['post', id],
@@ -61,10 +62,12 @@ export default function PostPage() {
         )
     }
 
+    const goBack = () => navigate(-1)
+
     return (
         <Box pt='56px'>
             <Box ml={2} my={4} w='fit-content'>
-                <ChakraLink as={Link} to='/app/community' display='flex' color='blue.500' alignItems='center'>
+                <ChakraLink as={Link} onClick={goBack} display='flex' color='blue.500' alignItems='center'>
                     <ChevronLeft height={24} width={24} /><span>Back</span>
                 </ChakraLink>
             </Box>

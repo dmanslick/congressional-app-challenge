@@ -31,7 +31,7 @@ const HomePage = () => {
          <FeatureBox
         title="Take an Emotion Detection Test"
         description="Understand your child's emotions with AI. Detect emotions and gain insights."
-        link="/camera-for-detection"
+        link="/camera-for-detection" // dhurv link it to the page
         buttonText="Try It Out"
         /> 
         <FeatureBox

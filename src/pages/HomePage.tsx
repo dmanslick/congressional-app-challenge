@@ -28,6 +28,12 @@ const HomePage = () => {
 
       {/* Feature Boxes */}
       <Flex wrap="wrap" justifyContent="center" mt={16}>
+         <FeatureBox
+        title="Take an Emotion Detection Test"
+        description="Understand your child's emotions with AI. Detect emotions and gain insights."
+        link="/camera-for-detection"
+        buttonText="Try It Out"
+        /> 
         <FeatureBox
           title="Chat with our AI Assistant"
           description="Get personalized support and answers to your questions about autism."
@@ -46,12 +52,8 @@ const HomePage = () => {
           link="/help-us-improve"// dhruv link it to the page
           buttonText="Contribute Here"
         />
-        <FeatureBox
-          title="Take a Detection Test"
-          description="Use our camera to capture your child's play and get insights into their developmental stage."
-          link="/camera-for-detection"// dhruv link it to the page
-          buttonText="Try It Out"
-        />
+      
+
         <FeatureBox
           title="Learn More About Autism"
           description="Find resources, articles, and expert insights to help you understand autism."

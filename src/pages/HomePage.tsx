@@ -11,7 +11,7 @@ const HomePage = () => {
         <Box
           bg="blue.500"
           color="white"
-          p={29}
+          p={25}
           display="flex"
           flexDirection="column"
           alignItems="center"

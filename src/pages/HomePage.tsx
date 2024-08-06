@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, Text, Link} from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text} from '@chakra-ui/react';
 import { useUser } from '../firebase/useUser';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -7,7 +7,6 @@ const HomePage = () => {
   
     return (
       <Box>
-        {/* Blue Banner */}
         <Box
           bg="blue.500"
           color="white"
@@ -15,7 +14,7 @@ const HomePage = () => {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          justifyContent="center" // Center content vertically
+          justifyContent="center"
           boxShadow="0 4px 8px 0 rgba(0, 0, 0, 0.2)"
           height="200px"
         >
@@ -32,31 +31,31 @@ const HomePage = () => {
         <FeatureBox
           title="Chat with our AI Assistant"
           description="Get personalized support and answers to your questions about autism."
-          link="/chatbot"
+          link="/chatbot"// dhruv link it to the page
           buttonText="Chat Now"
         />
         <FeatureBox
           title="Join the Community Forum"
           description="Connect with other parents and caregivers, share experiences, and get advice."
-          link="/community"
+          link="/community"// dhruv link it to the page
           buttonText="Find Your Community"
         />
         <FeatureBox
           title="Help Us Improve"
           description="Contribute to our research by submitting photos of your child expressing different emotions."
-          link="/help-us-improve"
+          link="/help-us-improve"// dhruv link it to the page
           buttonText="Contribute Here"
         />
         <FeatureBox
           title="Take a Detection Test"
           description="Use our camera to capture your child's play and get insights into their developmental stage."
-          link="/camera-for-detection"
+          link="/camera-for-detection"// dhruv link it to the page
           buttonText="Try It Out"
         />
         <FeatureBox
           title="Learn More About Autism"
           description="Find resources, articles, and expert insights to help you understand autism."
-          link="/find-help"
+          link="/find-help"// dhruv link it to the page
           buttonText="Click Here"
         />
       </Flex>

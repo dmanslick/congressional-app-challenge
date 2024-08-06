@@ -74,11 +74,11 @@ interface FeatureBoxProps {
 
 const FeatureBox: React.FC<FeatureBoxProps> = ({ title, description, link, buttonText }) => (
   <Box
-    key={title} // For accessibility
+    key={title}
     w="300px"
     m={4}
     p={8}
-    borderRadius="md" // Change to 'md' for rounded corners
+    borderRadius="md"
     bg="white"
     boxShadow="0 4px 8px 0 rgba(0, 0, 0, 0.2)"
   >

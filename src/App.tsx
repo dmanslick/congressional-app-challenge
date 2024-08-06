@@ -12,6 +12,7 @@ import PostPage from './pages/PostPage'
 import UnauthLayout from './layouts/UnauthLayout'
 import ModelProvider from './providers/ModelProvider'
 import HelpUsImprovePage from './pages/HelpUsImprovePage'
+import HelpPage from './pages/HelpPage'
 
 const queryClient = new QueryClient()
 
@@ -28,6 +29,7 @@ export default function App() {
                             </Route>
                             <Route path='/app' Component={AppLayout}>
                                 <Route path='improve' Component={HelpUsImprovePage} />
+                                <Route path='help' Component={HelpPage} />
                                 <Route path='camera' Component={CameraPage} />
                                 <Route index Component={HomePage} />
                                 <Route path='chatbot' Component={ChatBotPage} />

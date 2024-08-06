@@ -4,7 +4,6 @@ import LoginPage from './pages/LoginPage'
 import AppLayout from './layouts/AppLayout'
 import HomePage from './pages/HomePage'
 import ChatBotPage from './pages/ChatBotPage'
-import HelpPage from './pages/HelpPage'
 import CameraPage from './pages/CameraPage'
 import CommunityPage from './pages/CommunityPage'
 import SignUpPage from './pages/SignUpPage'
@@ -29,7 +28,6 @@ export default function App() {
                             </Route>
                             <Route path='/app' Component={AppLayout}>
                                 <Route path='improve' Component={HelpUsImprovePage} />
-                                <Route path='help' Component={HelpPage} />
                                 <Route path='camera' Component={CameraPage} />
                                 <Route index Component={HomePage} />
                                 <Route path='chatbot' Component={ChatBotPage} />

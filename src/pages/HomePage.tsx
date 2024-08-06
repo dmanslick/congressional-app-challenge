@@ -31,25 +31,25 @@ const HomePage = () => {
          <FeatureBox
         title="Take an Emotion Detection Test"
         description="Understand your child's emotions with AI. Detect emotions and gain insights."
-        link="/camera-for-detection" // dhurv link it to the page
+        link="/app/camera"
         buttonText="Try It Out"
         /> 
         <FeatureBox
           title="Chat with our AI Assistant"
           description="Get personalized support and answers to your questions about autism."
-          link="/chatbot"// dhruv link it to the page
+          link="/app/chatbot"
           buttonText="Chat Now"
         />
         <FeatureBox
           title="Join the Community Forum"
           description="Connect with other parents and caregivers, share experiences, and get advice."
-          link="/community"// dhruv link it to the page
+          link="/app/community"
           buttonText="Find Your Community"
         />
         <FeatureBox
           title="Help Us Improve"
           description="Contribute to our research by submitting photos of your child expressing different emotions."
-          link="/help-us-improve"// dhruv link it to the page
+          link="/app/improve"
           buttonText="Contribute Here"
         />
       
@@ -57,7 +57,7 @@ const HomePage = () => {
         <FeatureBox
           title="Learn More About Autism"
           description="Find resources, articles, and expert insights to help you understand autism."
-          link="/find-help"// dhruv link it to the page
+          link="/app/help"// dhruv link it to the page
           buttonText="Click Here"
         />
       </Flex>

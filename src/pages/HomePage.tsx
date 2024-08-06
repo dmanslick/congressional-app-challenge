@@ -29,7 +29,7 @@ const HomePage = () => {
       {/* Feature Boxes */}
       <Flex wrap="wrap" justifyContent="center" mt={16}>
          <FeatureBox
-        title="Take an Emotion Detection Test"
+        title="Emotion Detection Test"
         description="Understand your child's emotions with AI. Detect emotions and gain insights."
         link="/app/camera"
         buttonText="Try It Out"

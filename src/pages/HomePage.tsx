@@ -57,7 +57,7 @@ const HomePage = () => {
         <FeatureBox
           title="Learn More About Autism"
           description="Find resources, articles, and expert insights to help you understand autism."
-          link="/app/help"// dhruv link it to the page
+          link="/app/help"
           buttonText="Click Here"
         />
       </Flex>

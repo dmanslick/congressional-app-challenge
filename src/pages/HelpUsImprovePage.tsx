@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react'
 import { Box, Text, Center, Heading, Stack } from '@chakra-ui/react'
 import { cardMaxW } from '../utils/constants'
 

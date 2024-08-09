@@ -37,7 +37,7 @@ const HomePage = () => {
 
             <Center>
                 <form style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', marginTop: '40px', gap: 4 }} onSubmit={searchPosts}>
-                    <Input bg='white' color='black' placeholder='Search' onChange={e => setSearchQuery(e.target.value)} zIndex='revert-layer' />
+                    <Input bg='white' color='black' placeholder='Search Our App' onChange={e => setSearchQuery(e.target.value)} zIndex='revert-layer' />
                     <Button type='submit' aria-label='Search Icon'>
                         <SearchIcon aria-label='Search Button Icon' />
                     </Button>

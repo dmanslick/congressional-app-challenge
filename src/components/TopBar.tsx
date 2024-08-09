@@ -40,8 +40,13 @@ export default function TopBar() {
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent mx={3}>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>Logout</AlertDialogHeader>
+                    <center>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>Logout</AlertDialogHeader>
+                    </center>
+                    <center>
                         <AlertDialogBody>Are you sure? You will need to login again if you want to use this app.</AlertDialogBody>
+                        </center>
+
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={onClose}>
                                 Cancel

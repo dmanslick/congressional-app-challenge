@@ -36,7 +36,7 @@ const HomePage = () => {
             </Box>
 
             <Center>
-                <form style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', marginTop: '65px', gap: 4 }} onSubmit={searchPosts}>
+                <form style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', marginTop: '40px', gap: 4 }} onSubmit={searchPosts}>
                     <Input bg='white' color='black' placeholder='Search' onChange={e => setSearchQuery(e.target.value)} zIndex='revert-layer' />
                     <Button type='submit' aria-label='Search Icon'>
                         <SearchIcon aria-label='Search Button Icon' />
@@ -45,7 +45,7 @@ const HomePage = () => {
             </Center>
 
             {/* Feature Boxes */}
-            <Flex wrap="wrap" justifyContent="center" mt={16}>
+            <Flex wrap="wrap" justifyContent="center" mt={8} mb={16}>
                 <FeatureBox
                     title="Emotion Detection Test"
                     description="Understand your child's emotions with AI. Detect emotions and gain insights."

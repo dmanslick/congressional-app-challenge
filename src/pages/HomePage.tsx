@@ -24,7 +24,7 @@ const HomePage = () => {
                 flexDirection="column"
                 alignItems="center"
                 justifyContent="center"
-                boxShadow="0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+                boxShadow="0 10px 10px 0 rgba(0, 0, 0, 0.2)"
                 height="200px"
             >
                 {user && (
@@ -96,7 +96,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ title, description, link, butto
         p={8}
         borderRadius="md"
         bg="white"
-        boxShadow="0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+        boxShadow="0 10px 10px 0 rgba(0, 0, 0, 0.2)"
     >
         <Box textAlign="center">
             <Text fontWeight="semibold">{title}</Text>

@@ -4,7 +4,6 @@ import LoginPage from './pages/LoginPage'
 import AppLayout from './layouts/AppLayout'
 import HomePage from './pages/HomePage'
 import ChatBotPage from './pages/ChatBotPage'
-import HelpPage from './pages/HelpPage'
 import CameraPage from './pages/CameraPage'
 import CommunityPage from './pages/CommunityPage'
 import SignUpPage from './pages/SignUpPage'
@@ -13,6 +12,7 @@ import PostPage from './pages/PostPage'
 import UnauthLayout from './layouts/UnauthLayout'
 import ModelProvider from './providers/ModelProvider'
 import HelpUsImprovePage from './pages/HelpUsImprovePage'
+import HelpPage from './pages/HelpPage'
 
 const queryClient = new QueryClient()
 

@@ -1,51 +1,32 @@
-import { FormEvent, useState } from 'react';
-import { Box, Button, Center, Heading, Input, Text, Flex } from '@chakra-ui/react';
-import { SearchIcon } from 'lucide-react';
-import { useUser } from '../firebase/useUser';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { useUser } from '../firebase/useUser'
+import FeatureBox from '../components/FeatureBox'
 
-const HomePage = () => {
-    const { user } = useUser();
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const searchPosts = (e: FormEvent) => {
-        e.preventDefault();
-        // Implement search logic here based on your data
-        console.log('Search query:', searchQuery); // Replace with your search logic
-    };
+export default function HomePage() {
+    const { user } = useUser()
 
     return (
-        <Box>
+        <Box mt='56px' pb='4rem'>
             <Box
-                bg="blue.500"
-                color="white"
+                bg='blue.500'
+                color='white'
                 p={25}
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                boxShadow="0 10px 10px 0 rgba(0, 0, 0, 0.2)"
-                height="200px"
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                justifyContent='center'
+                boxShadow='0 4px 8px 0 rgba(0, 0, 0, 0.2)'
+                height='200px'
             >
                 {user && (
-                    <Text fontSize="3xl" fontWeight="medium">
+                    <Text fontSize='3xl' fontWeight='medium'>
                         Hello {user?.displayName || 'Guest'}!
                     </Text>
                 )}
                 <Heading>Welcome to Autism App</Heading>
             </Box>
 
-            <Center>
-                <form style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', marginTop: '40px', gap: 4 }} onSubmit={searchPosts}>
-                    <Input bg='white' color='black' placeholder='Search Our App' onChange={e => setSearchQuery(e.target.value)} zIndex='revert-layer' />
-                    <Button type='submit' aria-label='Search Icon'>
-                        <SearchIcon aria-label='Search Button Icon' />
-                    </Button>
-                </form>
-            </Center>
-
-            {/* Feature Boxes */}
-            <Flex wrap="wrap" justifyContent="center" mt={8} mb={16}>
+            <Flex wrap='wrap' justifyContent='center' mt={16}>
                 <FeatureBox
                     title="Emotion Detection Test"
                     description="Understand your child's emotions with AI. Detect emotions and gain insights."
@@ -78,36 +59,5 @@ const HomePage = () => {
                 />
             </Flex>
         </Box>
-    );
-};
-
-interface FeatureBoxProps {
-    title: string;
-    description: string;
-    link: string;
-    buttonText: string;
+    )
 }
-
-const FeatureBox: React.FC<FeatureBoxProps> = ({ title, description, link, buttonText }) => (
-    <Box
-        key={title}
-        w="300px"
-        m={4}
-        p={8}
-        borderRadius="md"
-        bg="white"
-        boxShadow="0 10px 10px 0 rgba(0, 0, 0, 0.2)"
-    >
-        <Box textAlign="center">
-            <Text fontWeight="semibold">{title}</Text>
-            <Text color="gray.500" fontSize="sm">
-                {description}
-            </Text>
-            <RouterLink to={link}>
-                <Button colorScheme="blue" mt={4}>{buttonText}</Button>
-            </RouterLink>
-        </Box>
-    </Box>
-);
-
-export default HomePage;

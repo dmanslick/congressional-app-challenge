@@ -16,7 +16,7 @@ export default function TopBar() {
 
     return (
         <>
-            <Box h='56px' bg='white' display='flex' flexDir='row' alignItems='center' position='fixed' top={0} w='100%' px={2} zIndex={10} boxShadow='0px 10px 10px rgba(0, 0, 0, 0.2)'>
+            <Box h='56px' bg='white' display='flex' flexDir='row' alignItems='center' position='fixed' top={0} w='100%' px={2} zIndex={10} boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'>
                 <Menu autoSelect={false}>
                     <MenuButton
                         as={IconButton}
@@ -40,17 +40,17 @@ export default function TopBar() {
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent mx={3}>
-                    <center>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>Logout</AlertDialogHeader>
-                        <AlertDialogBody>Are you sure? You will need to login again if you want to use this app.</AlertDialogBody>                        
-                        <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
-                                Cancel
-                            </Button>
-                            <Button colorScheme='red' onClick={handleLogout} ml={3}>
-                                Logout
-                            </Button>
-                        </AlertDialogFooter>
+                        <center>
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>Logout</AlertDialogHeader>
+                            <AlertDialogBody>Are you sure? You will need to login again if you want to use this app.</AlertDialogBody>
+                            <AlertDialogFooter>
+                                <Button ref={cancelRef} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='red' onClick={handleLogout} ml={3}>
+                                    Logout
+                                </Button>
+                            </AlertDialogFooter>
                         </center>
                     </AlertDialogContent>
                 </AlertDialogOverlay>

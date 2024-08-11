@@ -10,6 +10,7 @@ interface Post {
     content: string
     tags: string[]
     comments: string[]
+    username: string
 }
 
 interface PostComment {
@@ -26,4 +27,11 @@ interface CreateCommentArgs {
 interface ChatMessage {
     role: 'user' | 'model'
     parts: { text: string }[]
+}
+
+interface CreatePostArgs {
+    username: string,
+    title: string,
+    tags: string[],
+    content: string
 }

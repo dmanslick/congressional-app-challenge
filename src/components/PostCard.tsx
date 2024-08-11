@@ -6,6 +6,7 @@ export default function PostCard(props: Post) {
     return (
         <Card as={Link} to={`/app/post/${props.id}`} maxW={320} w='100%' mx='auto' userSelect='none' _active={{ bg: '#F7F7F7' }} _hover={{ bg: '#F7F7F7' }}>
             <CardHeader>
+                <Text fontSize='small' color='grey'>{props.username}</Text>
                 <Text fontSize='large' fontWeight='medium'>{props.title}</Text>
             </CardHeader>
             <CardBody mt={-8} mb={-6}>

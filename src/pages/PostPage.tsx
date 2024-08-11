@@ -85,7 +85,7 @@ export default function PostPage() {
             <Center>
                 <Button type='submit' colorScheme='blue' w={cardMaxW} mt={4} onClick={onOpen}>Leave a comment</Button>
             </Center>
-            <Box mt={8} pb={32}>
+            <Box mt={8} pb={28}>
                 {post.data?.comments.map(comment => {
                     const commentObj = JSON.parse(comment) as PostComment
                     return (

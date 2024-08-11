@@ -44,13 +44,13 @@ export default function ChatBotPage() {
         setLoadingResponse(false)
     }
 
-    useEffect(() => {
-        console.log(user?.uid)
+    // useEffect(() => {
+    //     console.log(user?.uid)
 
-        return () => {
-            console.log('cleanup')
-        }
-    }, [])
+    //     return () => {
+    //         console.log('cleanup')
+    //     }
+    // }, [])
 
     return (
         <AbsoluteCenter>

@@ -14,14 +14,16 @@ interface Post {
 }
 
 interface PostComment {
-    username: string,
+    username: string
     content: string
+    id: string
 }
 
 interface CreateCommentArgs {
     id: string
     username: string
     content: string
+    commentId: string
 }
 
 interface ChatMessage {
@@ -34,4 +36,15 @@ interface CreatePostArgs {
     title: string,
     tags: string[],
     content: string
+}
+
+interface DeleteCommentArgs {
+    username: string
+    content: string
+    id: string,
+    postId: string
+}
+
+interface DeletePostArgs {
+
 }

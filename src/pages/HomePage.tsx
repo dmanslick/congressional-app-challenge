@@ -43,7 +43,7 @@ export default function HomePage() {
                     title="Join the Community Forum"
                     description="Connect with other parents and caregivers, share experiences, and get advice."
                     link="/app/community"
-                    buttonText="Find Your Community"
+                    buttonText="Join the Community"
                 />
                 <FeatureBox
                     title="Help Us Improve"

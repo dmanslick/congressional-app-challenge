@@ -33,16 +33,18 @@ export default function PostPage() {
 
     const { mutate, error: mutateError } = useMutation({
         mutationFn: createComment,
-        onSuccess: (_, { username, content }: any) => queryClient.setQueryData(['post', id], (prev: Post) => {
-            const newComments = [...prev.comments, JSON.stringify({ username, content })]
-            return { ...prev, comments: newComments }
-        }),
+        onSuccess: (_, { username, content, commentId }: any) => {
+            queryClient.setQueryData(['post', id], (prev: Post) => {
+                const newComments = [...prev.comments, JSON.stringify({ username, content, id: commentId })]
+                return { ...prev, comments: newComments }
+            })
+        }
     })
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
         // @ts-ignore
-        if (content != '') mutate({ id, content, username: user?.displayName })
+        if (content != '') mutate({ id, content, username: user?.displayName, commentId: crypto.randomUUID() })
         onClose()
     }
 
@@ -89,7 +91,7 @@ export default function PostPage() {
                 {post.data?.comments.map(comment => {
                     const commentObj = JSON.parse(comment) as PostComment
                     return (
-                        <CommentCard data={commentObj} />
+                        <CommentCard data={commentObj} postId={id as string} />
                     )
                 })}
             </Box>

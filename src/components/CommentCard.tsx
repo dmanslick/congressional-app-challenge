@@ -39,6 +39,7 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
                             <Portal>
                                 <MenuList>
                                     <MenuItem onClick={handleDeleteComment}>Delete</MenuItem>
+                                    <MenuItem>Edit</MenuItem>
                                 </MenuList>
                             </Portal>
                         </Menu>

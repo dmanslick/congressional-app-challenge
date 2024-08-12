@@ -1,14 +1,15 @@
 import { FormEvent, useState } from 'react'
-import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, IconButton, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
 import { Link as ChakraLink } from '@chakra-ui/react'
-import { ChevronLeft, MessageSquareIcon } from 'lucide-react'
+import { ChevronLeft, EllipsisIcon, MessageSquareIcon } from 'lucide-react'
 import CommentCard from '../components/CommentCard'
 import { createComment } from '../utils/createComment'
 import { useUser } from '../firebase/useUser'
 import { cardMaxW } from '../utils/constants'
+import { deletePost } from '../utils/deletePost'
 
 type Params = {
     id: string
@@ -31,7 +32,7 @@ export default function PostPage() {
         staleTime: 1000 * 60,
     })
 
-    const { mutate, error: mutateError } = useMutation({
+    const { mutate: mutateCreateComment, error: mutateCreateCommentError } = useMutation({
         mutationFn: createComment,
         onSuccess: (_, { username, content, commentId }: any) => {
             queryClient.setQueryData(['post', id], (prev: Post) => {
@@ -41,14 +42,26 @@ export default function PostPage() {
         }
     })
 
-    const handleSubmit = (e: FormEvent) => {
+    const { mutate: mutateDeletePost, error: mutateDeletePostError } = useMutation({
+        mutationFn: deletePost,
+        onSuccess: (_, { id }: any) => {
+            queryClient.setQueryData(['posts'], (prev: Post[]) => {
+                prev.filter(old => old.id == id)
+            })
+            navigate('/app/community')
+        }
+    })
+
+    const handleCreateComment = (e: FormEvent) => {
         e.preventDefault()
         // @ts-ignore
-        if (content != '') mutate({ id, content, username: user?.displayName, commentId: crypto.randomUUID() })
+        if (content != '') mutateCreateComment({ id, content, username: user?.displayName, commentId: crypto.randomUUID() })
         onClose()
     }
 
-    if (post.error || mutateError) {
+    const handleDeletePost = () => mutateDeletePost({ id })
+
+    if (post.error || mutateCreateCommentError || mutateDeletePostError) {
         return (
             <AbsoluteCenter>
                 <Text color='red'>Error</Text>
@@ -80,8 +93,27 @@ export default function PostPage() {
                 <CardBody mt={-6}>
                     <Text color='grey'>{post.data?.content}</Text>
                 </CardBody>
-                <CardFooter mt={-6} ml='auto' color='#bababa' display='flex' flexDir='row' alignItems='center' gap={2}>
-                    <MessageSquareIcon /><Text>{post.data?.comments.length}</Text>
+                <CardFooter mt={-6} ml='auto' color='#bababa' display='flex' flexDir='row' justifyContent='space-between' w='100%'>
+                    {post.data?.username == user?.displayName && (
+                        <Menu autoSelect={false}>
+                            <MenuButton
+                                as={IconButton}
+                                aria-label='Options'
+                                icon={<EllipsisIcon />}
+                                variant='ghost'
+                                size='xs'
+                            />
+                            <Portal>
+                                <MenuList>
+                                    <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+                                    <MenuItem>Edit</MenuItem>
+                                </MenuList>
+                            </Portal>
+                        </Menu>
+                    )}
+                    <Box display='flex' flexDir='row' alignItems='center' gap={2}>
+                        <MessageSquareIcon /><Text>{post.data?.comments.length}</Text>
+                    </Box>
                 </CardFooter>
             </Card>
             <Center>
@@ -107,7 +139,7 @@ export default function PostPage() {
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={handleSubmit} isDisabled={isSubmitDisabled}>Submit</Button>
+                            <Button colorScheme='blue' mr={3} onClick={handleCreateComment} isDisabled={isSubmitDisabled}>Submit</Button>
                             <Button colorScheme='red' onClick={onClose}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>

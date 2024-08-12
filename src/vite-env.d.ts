@@ -46,5 +46,5 @@ interface DeleteCommentArgs {
 }
 
 interface DeletePostArgs {
-
+    id: string
 }

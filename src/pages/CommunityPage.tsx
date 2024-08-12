@@ -59,7 +59,7 @@ export default function CommunityPage() {
             <Center>
                 <Button mt={4} maxW='320px' w='100%' colorScheme='blue' onClick={onOpen}>Create Post</Button>
             </Center>
-            <Box mt={4}>
+            <Box mt={4} pb={20}>
                 {posts.isLoading && (
                     <Center>
                         <Spinner color='blue.500' />

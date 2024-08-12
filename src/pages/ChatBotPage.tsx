@@ -22,16 +22,18 @@ const geminiModel = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' })
 export default function ChatBotPage() {
     const { user } = useUser()
     const [message, setMessage] = useState('')
-    const [loadingResponse, setLoadingResponse] = useState(false)
     const { data: history } = useQuery({
         queryKey: ['chatHistory'],
         queryFn: () => getChatHistory(user?.uid as string)
     })
 
-    const { mutate } = useMutation({
-        mutationFn: async () => { },
-        onSuccess: (_, variables) => {
-
+    const { mutate, isPending } = useMutation({
+        mutationFn: async () => {
+            const result = await chat.sendMessage(message)
+            return result.response.text()
+        },
+        onSuccess: (text) => {
+            console.log(text)
         },
     })
 
@@ -39,9 +41,7 @@ export default function ChatBotPage() {
 
     const sendMessage = async (e: FormEvent) => {
         e.preventDefault()
-        setLoadingResponse(true)
-        const result = await chat.sendMessage(message)
-        setLoadingResponse(false)
+        mutate()
     }
 
     // useEffect(() => {

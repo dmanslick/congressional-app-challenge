@@ -49,7 +49,7 @@ export default function CommunityPage() {
         <>
             <Box w='100%' bg='blue.500' color='white' pt={4} pb={5} display='flex' flexDir='column' alignItems='center' gap={3} mt='56px'>
                 <Text fontWeight='semibold' fontSize='x-large'>Our Community</Text>
-                <Box style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', gap: 4 }}>
+                <Box maxW='320px' w='100%' display='flex' alignItems='center' gap={2}>
                     <Input bg='white' color='black' placeholder='Search' onChange={e => searchPosts(e.target.value)} zIndex='revert-layer' />
                     <Button type='submit' aria-label='Search Icon'>
                         <SearchIcon aria-label='Search Button Icon' />

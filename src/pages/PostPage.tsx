@@ -36,7 +36,7 @@ export default function PostPage() {
         mutationFn: createComment,
         onSuccess: (_, { username, content, commentId }: any) => {
             queryClient.setQueryData(['post', id], (prev: Post) => {
-                const newComments = [...prev.comments, JSON.stringify({ username, content, id: commentId })]
+                const newComments = [...prev.comments, { username, content, id: commentId }]
                 return { ...prev, comments: newComments }
             })
         }
@@ -121,9 +121,8 @@ export default function PostPage() {
             </Center>
             <Box mt={8} pb={20}>
                 {post.data?.comments.map(comment => {
-                    const commentObj = JSON.parse(comment) as PostComment
                     return (
-                        <CommentCard data={commentObj} postId={id as string} />
+                        <CommentCard data={comment} postId={id as string} />
                     )
                 })}
             </Box>

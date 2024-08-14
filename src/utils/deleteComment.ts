@@ -3,6 +3,6 @@ import { db } from '../firebase/firebase'
 
 export const deleteComment = async ({ username, content, id, postId }: DeleteCommentArgs) => {
     await updateDoc(doc(db, 'posts', postId), {
-        comments: arrayRemove(JSON.stringify({ username, content, id }))
+        comments: arrayRemove({ username, content, id })
     })
 }

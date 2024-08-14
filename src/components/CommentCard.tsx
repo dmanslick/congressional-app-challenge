@@ -13,7 +13,7 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
         mutationFn: deleteComment,
         onSuccess: (_, { id }: DeleteCommentArgs) => {
             queryClient.setQueryData(['post', postId], (prev: Post) => {
-                const updatedComments = prev.comments.filter((comment: any) => JSON.parse(comment).id != id)
+                const updatedComments = prev.comments.filter((comment: any) => comment.id != id)
                 console.log(updatedComments)
                 return { ...prev, comments: updatedComments }
             })

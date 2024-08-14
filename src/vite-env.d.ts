@@ -9,7 +9,7 @@ interface Post {
     title: string
     content: string
     tags: string[]
-    comments: string[]
+    comments: PostComment[]
     username: string
 }
 
@@ -28,7 +28,7 @@ interface CreateCommentArgs {
 
 interface ChatMessage {
     role: 'user' | 'model'
-    parts: { text: string }[]
+    text: string
 }
 
 interface CreatePostArgs {

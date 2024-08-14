@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'
 import { useUser } from '../firebase/useUser'
@@ -22,45 +22,45 @@ const geminiModel = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' })
 export default function ChatBotPage() {
     const { user } = useUser()
     const [message, setMessage] = useState('')
+    const queryClient = useQueryClient()
     const { data: history } = useQuery({
-        queryKey: ['chatHistory'],
+        queryKey: ['chatHistory', user?.uid],
         queryFn: () => getChatHistory(user?.uid as string)
     })
+    const chat = useMemo(() => geminiModel.startChat(), [])
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
+            queryClient.setQueryData(['chatHistory', user?.uid], (prev: ChatMessage[] | undefined) => {
+                if (prev == undefined) return [{ role: 'user', text: message }]
+                return [...prev, { role: 'user', text: message }]
+            })
             const result = await chat.sendMessage(message)
             return result.response.text()
         },
         onSuccess: (text) => {
             console.log(text)
+            queryClient.setQueryData(['chatHistory', user?.uid], (prev: ChatMessage[] | undefined) => {
+                if (prev == undefined) return [{ role: 'model', text }]
+                return [...prev, { role: 'model', text }]
+            })
         },
     })
-
-    const chat = useMemo(() => geminiModel.startChat(), [])
 
     const sendMessage = async (e: FormEvent) => {
         e.preventDefault()
         mutate()
     }
 
-    // useEffect(() => {
-    //     console.log(user?.uid)
-
-    //     return () => {
-    //         console.log('cleanup')
-    //     }
-    // }, [])
-
     return (
         <AbsoluteCenter>
             <Box>
                 <Box display='flex' flexDir='column-reverse' h='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)'>
-                    {history && history.map(message => {
+                    {history && [...history].reverse().map(message => {
                         if (message.role == 'model') {
-                            return <BotMessage text={message.parts[0].text} />
+                            return <BotMessage text={message.text} />
                         }
-                        return <UserMessage text={message.parts[0].text} />
+                        return <UserMessage text={message.text} />
                     })}
                 </Box>
                 <Flex dir='row' gap={2} mb={20} mt={2} as='form' onSubmit={sendMessage}>

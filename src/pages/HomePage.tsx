@@ -23,7 +23,7 @@ export default function HomePage() {
                         Hello {user?.displayName || 'Guest'}!
                     </Text>
                 )}
-                <Heading>Welcome to Autism App</Heading>
+                <Heading>Welcome to Kora</Heading>
             </Box>
 
             <Flex wrap='wrap' justifyContent='center' mt={16}>
@@ -34,7 +34,7 @@ export default function HomePage() {
                     buttonText="Try It Out"
                 />
                 <FeatureBox
-                    title="Chat with our AI Assistant"
+                    title="Chat with Kora AI"
                     description="Get personalized support and answers to your questions about autism."
                     link="/app/chatbot"
                     buttonText="Chat Now"

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { useUser } from '../firebase/useUser'
 import FeatureBox from '../components/FeatureBox'
 

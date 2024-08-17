@@ -6,7 +6,7 @@ export default function HomePage() {
     const { user } = useUser()
 
     return (
-        <Box mt='56px' pb='4rem'>
+        <Box mt='20px' pb='4rem'>
             <Box
                 bg='blue.500'
                 color='white'
@@ -19,12 +19,26 @@ export default function HomePage() {
                 height='200px'
             >
                 {user && (
-                    <Text fontSize='3xl' fontWeight='medium'>
+                    <Text fontSize='3xl' fontWeight='medium' mt={10}>
                         Hello {user?.displayName || 'Guest'}!
                     </Text>
                 )}
-                <Heading>Welcome to Kora</Heading>
-            </Box>
+          <Text
+          position='relative'
+          fontSize='4xl'
+          fontWeight='bold'
+          textAlign='center'
+          textShadow='0px 2px 1px rgba(0, 0, 0, 0.1)'
+          sx={{
+            background: 'linear-gradient(to right, #1E25DB,#83A1DB, #ffffff)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            '-webkit-text-fill-color': 'transparent'
+          }}
+        >
+          Welcome to Kora
+        </Text>
+          </Box>
 
             <Flex wrap='wrap' justifyContent='center' mt={16}>
                 <FeatureBox

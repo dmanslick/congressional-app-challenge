@@ -30,7 +30,7 @@ export default function HomePage() {
           textAlign='center'
           textShadow='0px 2px 1px rgba(0, 0, 0, 0.1)'
           sx={{
-            background: 'linear-gradient(to right, #1E25DB,#83A1DB, #ffffff)',
+            background: 'linear-gradient(to right, #d5e2f7,#83A1DB, #ffffff)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             '-webkit-text-fill-color': 'transparent'

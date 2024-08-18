@@ -1,20 +1,22 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenerativeAI, } from '@google/generative-ai'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'
 import { useUser } from '../firebase/useUser'
-import { AbsoluteCenter, Box, Button, Flex, Input, Textarea } from '@chakra-ui/react'
+import { Box, Button, Flex, Textarea } from '@chakra-ui/react'
 import BotMessage from '../components/BotMessage'
 import UserMessage from '../components/UserMessage'
 import { SendIcon } from 'lucide-react'
+import { saveChatHistory } from '../utils/saveChatHistory'
+import { historyConverter } from '../utils/historyConverter'
 
-// const generationConfig = {
-//     temperature: 1,
-//     topP: 0.95,
-//     topK: 64,
-//     maxOutputTokens: 8192,
-//     responseMimeType: "text/plain",
-// }
+const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 8192,
+    // responseMimeType: 'text/plain',
+}
 
 const gemini = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
 const geminiModel = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' })
@@ -23,23 +25,34 @@ export default function ChatBotPage() {
     const { user } = useUser()
     const [message, setMessage] = useState('')
     const queryClient = useQueryClient()
-    const { data: history } = useQuery({
+    const { data: history, isLoading } = useQuery({
         queryKey: ['chatHistory', user?.uid],
         queryFn: () => getChatHistory(user?.uid as string)
     })
-    const chat = useMemo(() => geminiModel.startChat(), [])
 
-    const { mutate, isPending } = useMutation({
+    const chat = useMemo(() => {
+        if (!isLoading && history != undefined) {
+            return geminiModel.startChat({
+                history: historyConverter(history as ChatMessage[]),
+                generationConfig
+            })
+        }
+
+        return geminiModel.startChat({
+            generationConfig
+        })
+    }, [isLoading])
+
+    const { mutate } = useMutation({
         mutationFn: async () => {
             queryClient.setQueryData(['chatHistory', user?.uid], (prev: ChatMessage[] | undefined) => {
                 if (prev == undefined) return [{ role: 'user', text: message }]
                 return [...prev, { role: 'user', text: message }]
             })
-            const result = await chat.sendMessage(message)
+            const result = await chat!.sendMessage(message)
             return result.response.text()
         },
         onSuccess: (text) => {
-            console.log(text)
             queryClient.setQueryData(['chatHistory', user?.uid], (prev: ChatMessage[] | undefined) => {
                 if (prev == undefined) return [{ role: 'model', text }]
                 return [...prev, { role: 'model', text }]
@@ -52,24 +65,37 @@ export default function ChatBotPage() {
         mutate()
     }
 
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight)
+
+        const saveBeforeClose = () => {
+            if (history != undefined) saveChatHistory({ uid: user?.uid!, history })
+        }
+
+        window.addEventListener('beforeunload', saveBeforeClose)
+
+        return () => {
+            if (history != undefined) saveChatHistory({ uid: user?.uid!, history })
+            window.removeEventListener('beforeunload', saveBeforeClose)
+        }
+    }, [history])
+
     return (
-        <AbsoluteCenter>
-            <Box>
-                <Box display='flex' flexDir='column-reverse' h='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)'>
-                    {history && [...history].reverse().map(message => {
-                        if (message.role == 'model') {
-                            return <BotMessage text={message.text} />
-                        }
-                        return <UserMessage text={message.text} />
-                    })}
-                </Box>
-                <Flex dir='row' gap={2} mb={20} mt={2} as='form' onSubmit={sendMessage}>
-                    <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} />
-                    <Button type='submit' aria-label='Search Icon' colorScheme='blue'>
-                        <SendIcon aria-label='Search Button Icon' />
-                    </Button>
-                </Flex>
+        <>
+            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)' mx='auto' mb='120px'>
+                {history && [...history].reverse().map((message, i) => {
+                    if (message.role == 'model') {
+                        return <BotMessage key={i} text={message.text} />
+                    }
+                    return <UserMessage key={i} text={message.text} />
+                })}
             </Box>
-        </AbsoluteCenter>
+            <Flex position='fixed' bottom='56px' left='50%' transform='translateX(-50%)' direction='row' gap={2} mb={4} as='form' onSubmit={sendMessage} maxW='400px' width='calc(100vw - 1rem)'>
+                <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} />
+                <Button type='submit' aria-label='Search Icon' colorScheme='blue'>
+                    <SendIcon aria-label='Search Button Icon' />
+                </Button>
+            </Flex>
+        </>
     )
 }

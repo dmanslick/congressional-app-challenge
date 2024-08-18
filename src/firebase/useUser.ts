@@ -1,4 +1,4 @@
-import { useInsertionEffect, useState } from 'react'
+import { useInsertionEffect, useLayoutEffect, useState } from 'react'
 import { auth } from './firebase'
 import { User } from 'firebase/auth'
 

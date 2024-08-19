@@ -1,6 +1,7 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import {Text } from '@chakra-ui/react'
 import { useUser } from '../firebase/useUser'
 import FeatureBox from '../components/FeatureBox'
+import {Box, Flex} from '@chakra-ui/react'
 
 export default function HomePage() {
     const { user } = useUser()
@@ -30,7 +31,7 @@ export default function HomePage() {
           textAlign='center'
           textShadow='0px 2px 1px rgba(0, 0, 0, 0.1)'
           sx={{
-            background: 'linear-gradient(to right, #d5e2f7,#83A1DB, #ffffff)',
+            background: 'linear-gradient(to right, #d5e2f7,#bbcdf0, #ffffff)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             '-webkit-text-fill-color': 'transparent'

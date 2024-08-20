@@ -15,7 +15,7 @@ const generationConfig = {
     topP: 0.95,
     topK: 64,
     maxOutputTokens: 8192,
-    // responseMimeType: 'text/plain',
+    responseMimeType: 'text/plain',
 }
 
 const gemini = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY)
@@ -32,15 +32,10 @@ export default function ChatBotPage() {
 
     const chat = useMemo(() => {
         if (!isLoading && history != undefined) {
-            return geminiModel.startChat({
-                history: historyConverter(history as ChatMessage[]),
-                generationConfig
-            })
+            return geminiModel.startChat({ history: historyConverter(history as ChatMessage[]), generationConfig })
         }
 
-        return geminiModel.startChat({
-            generationConfig
-        })
+        return geminiModel.startChat({ generationConfig })
     }, [isLoading])
 
     const { mutate } = useMutation({
@@ -53,10 +48,13 @@ export default function ChatBotPage() {
             return result.response.text()
         },
         onSuccess: (text) => {
+            let newHistory
             queryClient.setQueryData(['chatHistory', user?.uid], (prev: ChatMessage[] | undefined) => {
-                if (prev == undefined) return [{ role: 'model', text }]
-                return [...prev, { role: 'model', text }]
+                if (prev == undefined) newHistory = [{ role: 'model', text }]
+                else newHistory = [...prev, { role: 'model', text }]
+                return newHistory
             })
+            saveChatHistory({ uid: user?.uid!, history: newHistory as any as ChatMessage[] })
         },
     })
 
@@ -67,22 +65,11 @@ export default function ChatBotPage() {
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
-
-        const saveBeforeClose = () => {
-            if (history != undefined) saveChatHistory({ uid: user?.uid!, history })
-        }
-
-        window.addEventListener('beforeunload', saveBeforeClose)
-
-        return () => {
-            if (history != undefined) saveChatHistory({ uid: user?.uid!, history })
-            window.removeEventListener('beforeunload', saveBeforeClose)
-        }
     }, [history])
 
     return (
         <>
-            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)' mx='auto' mb='120px'>
+            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
                 {history && [...history].reverse().map((message, i) => {
                     if (message.role == 'model') {
                         return <BotMessage key={i} text={message.text} />

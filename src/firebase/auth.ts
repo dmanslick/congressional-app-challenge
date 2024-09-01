@@ -9,11 +9,11 @@ export const logout = async () => {
     auth.signOut()
 }
 
-export const register = async (email: string, password: string, username: string) => {
-    sessionStorage.setItem('displayName', username)
-    createUserWithEmailAndPassword(auth, email, password).then(result => {
+export const register = async (data: RegisterArgs) => {
+    sessionStorage.setItem('displayName', data['Name'])
+    createUserWithEmailAndPassword(auth, data['Email'], data['Password']).then(result => {
         updateProfile(result.user, {
-            displayName: username,
+            displayName: data['Name'],
         })
     })
 }

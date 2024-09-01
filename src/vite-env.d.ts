@@ -48,3 +48,15 @@ interface DeleteCommentArgs {
 interface DeletePostArgs {
     id: string
 }
+
+interface RegisterArgs {
+    'Name': string
+    'Email': string
+    'Password': string
+    'Child Name': string
+    'Child Age': string
+    'Diagnosis Date': string
+    'Sensory Sensitivities': string
+    'Current Therapies': string
+    'Preferred Calming Techniques': string
+}

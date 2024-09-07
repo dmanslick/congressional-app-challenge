@@ -23,7 +23,7 @@ export default function HomePage() {
                         Hello {user?.displayName || 'Guest'}!
                     </Text>
                 )}
-                <Heading>Welcome to Autism App</Heading>
+                <Heading>Welcome to Kora</Heading>
             </Box>
 
             <Flex wrap='wrap' justifyContent='center' mt={16}>

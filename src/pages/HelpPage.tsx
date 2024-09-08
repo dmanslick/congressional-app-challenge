@@ -204,8 +204,8 @@ const HelpPage: React.FC = () => {
             </SimpleGrid>
           </Box>
 
-          <Box>
-            <Heading as="h2" size="lg" mb={4}>
+          <Box marginBottom={10}>
+            <Heading as="h2" size="lg" mb={7}>
               Frequently Asked Questions
             </Heading>
             <Accordion allowMultiple>

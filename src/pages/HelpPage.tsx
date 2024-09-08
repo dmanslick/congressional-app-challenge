@@ -21,6 +21,10 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
 } from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
 
@@ -128,6 +132,24 @@ const HelpPage: React.FC = () => {
     },
   ];
 
+  const faqData = [
+    {
+      question: "What are the signs of autism in children?",
+      answer:
+        "Early signs of autism in children can include difficulty with communication, social interaction, and repetitive behaviors. If you have concerns, speak to your child's doctor.",
+    },
+    {
+      question: "What types of support are available for children with autism?",
+      answer:
+        "There are various support options available, including therapy, educational programs, and social skills groups. Talk to your child's doctor or a specialist to determine the best approach.",
+    },
+    {
+      question: "How can I get financial help for raising a child with autism?",
+      answer:
+        "Financial assistance options may vary depending on your location.  You can explore government programs, disability benefits, and fundraising options.",
+    },
+  ];
+
   return (
     <Box>
       <Box bg="blue.500" color="white" py={8} px={4} textAlign="center">
@@ -180,6 +202,27 @@ const HelpPage: React.FC = () => {
                 <ArticlePreview key={index} {...article} />
               ))}
             </SimpleGrid>
+          </Box>
+
+          <Box>
+            <Heading as="h2" size="lg" mb={4}>
+              Frequently Asked Questions
+            </Heading>
+            <Accordion allowMultiple>
+              {faqData.map((item, index) => (
+                <AccordionItem key={index}>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      {item.question}
+                    </Box>
+                    <ChevronRight />
+                  </AccordionButton>
+                  <AccordionPanel>
+                    {item.answer}
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </Box>
         </VStack>
       </Container>

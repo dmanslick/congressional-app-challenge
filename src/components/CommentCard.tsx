@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Button, Card, CardBody, CardHeader, IconButton, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { cardMaxW } from '../utils/constants'
 import { useUser } from '../firebase/useUser'
 import { EllipsisVerticalIcon } from 'lucide-react'

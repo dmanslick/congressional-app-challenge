@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AbsoluteCenter, Box, Button, Center, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { SearchIcon } from 'lucide-react'
 import { getPosts } from '../utils/getPosts'
@@ -14,6 +14,7 @@ export default function CommunityPage() {
     const [title, setTitle] = useState('')
     const [tags, setTags] = useState([] as string[])
     const [results, setResults] = useState<Post[] | undefined>(undefined)
+    const queryClient = useQueryClient()
     const posts = useQuery({
         queryKey: ['posts'],
         queryFn: () => getPosts(),
@@ -21,6 +22,23 @@ export default function CommunityPage() {
         refetchOnMount: true,
         // staleTime: 1000 * 60,
     })
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: createPost,
+        onSuccess: (id, variables) => {
+            const newPost = [{ id, comments: [], ...variables }]
+            queryClient.setQueryData(['posts'], (prev: Post[]) => {
+                // console.log([...prev, ...newPost])
+                return [...prev, ...newPost]
+            })
+            queryClient.invalidateQueries({ queryKey: ['posts'] })
+            onClose()
+        }
+    })
+
+    useEffect(() => {
+        console.log(posts.data)
+    }, [posts])
 
     const searchPosts = (searchQuery: string) => {
         if (!searchQuery) setResults(undefined)
@@ -30,13 +48,7 @@ export default function CommunityPage() {
         setResults(filtered)
     }
 
-    const handleCreatePost = async () => {
-        try {
-            await createPost({ username: user?.displayName as string, title, tags, content })
-        } catch (e) {
-            console.log('error')
-        }
-    }
+    const handleCreatePost = () => mutate({ username: user?.displayName as string, title, tags, content })
 
     const handleClose = () => {
         onClose()
@@ -94,8 +106,8 @@ export default function CommunityPage() {
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isDisabled={title.length == 0 || content.length == 0}>Submit</Button>
-                            <Button colorScheme='red' onClick={handleClose}>Cancel</Button>
+                            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isLoading={isPending} isDisabled={title.length == 0 || content.length == 0}>Submit</Button>
+                            <Button colorScheme='red' onClick={handleClose} isLoading={isPending}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Portal>

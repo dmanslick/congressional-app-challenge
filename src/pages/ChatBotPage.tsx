@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, } from '@google/generative-AI'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { FormEvent, useEffect,useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'
 import { useUser } from '../firebase/useUser'
 import { Box, Button, Heading, Flex, Text, Textarea } from '@chakra-ui/react'
@@ -67,21 +67,8 @@ export default function ChatBotPage() {
         window.scrollTo(0, document.body.scrollHeight)
     }, [history])
 
-    // Assuming your menu bar height is 64 pixels (adjust if needed)
-    const menuBarHeight = 64;
-
     return (
         <>
-            {/* Introduction message in sticky banner, directly below the menu bar */}
-            <Box bg='blue.500' color='white' p={25} display='flex' flexDirection='column' alignItems='center' justifyContent='center' fontSize='xl' position='sticky' top={menuBarHeight} zIndex={1000}>
-                <Heading>Hi! My name is Kora AI, your personal assistant for anything related to autism.</Heading>
-                {user && (
-                    <Text fontSize='3xl' fontWeight='medium'>
-                        Welcome {user?.displayName || 'Guest'}!
-                    </Text>
-                )}
-            </Box>
-
             <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
                 {history && [...history].reverse().map((message, i) => {
                     if (message.role == 'model') {

@@ -1,5 +1,5 @@
-import { FormEvent, useState } from 'react'
-import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, IconButton, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { FormEvent, useRef, useState } from 'react'
+import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
@@ -10,6 +10,7 @@ import { createComment } from '../utils/createComment'
 import { useUser } from '../firebase/useUser'
 import { cardMaxW } from '../utils/constants'
 import { deletePost } from '../utils/deletePost'
+import { editPost } from '../utils/editPost'
 
 type Params = {
     id: string
@@ -17,7 +18,8 @@ type Params = {
 
 export default function PostPage() {
     const { id } = useParams<Params>()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const commentModal = useDisclosure()
+    const editPostModal = useDisclosure()
     const [content, setContent] = useState('')
     const queryClient = useQueryClient()
     const { user } = useUser()
@@ -52,16 +54,40 @@ export default function PostPage() {
         }
     })
 
+    const { mutate: mutateEditPost, error: mutateEditPostError, isPending: isMutateEditPostPending } = useMutation({
+        mutationFn: editPost,
+        onSuccess: (_, variables) => {
+            queryClient.setQueryData(['post', id], (prev: Post) => {
+                return { ...prev, ...variables }
+            })
+            editPostModal.onClose()
+        }
+    })
+
     const handleCreateComment = (e: FormEvent) => {
         e.preventDefault()
         // @ts-ignore
         if (content != '') mutateCreateComment({ id, content, username: user?.displayName, commentId: crypto.randomUUID() })
-        onClose()
+        commentModal.onClose()
     }
 
     const handleDeletePost = () => mutateDeletePost({ id })
 
-    if (post.error || mutateCreateCommentError || mutateDeletePostError) {
+    const handleEditPost = (e: FormEvent<HTMLFormElement>) => {
+        console.log('edit submit')
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const tags = formData.get('tags') as string
+        const data = {
+            title: formData.get('title') as string,
+            tags: tags.split(/,\s*/),
+            content: formData.get('content') as string,
+            id: id!
+        }
+        mutateEditPost(data)
+    }
+
+    if (post.error || mutateCreateCommentError || mutateDeletePostError || mutateEditPostError) {
         return (
             <AbsoluteCenter>
                 <Text color='red'>Error</Text>
@@ -106,7 +132,7 @@ export default function PostPage() {
                             <Portal>
                                 <MenuList>
                                     <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
-                                    <MenuItem>Edit</MenuItem>
+                                    <MenuItem onClick={editPostModal.onOpen}>Edit</MenuItem>
                                 </MenuList>
                             </Portal>
                         </Menu>
@@ -117,7 +143,7 @@ export default function PostPage() {
                 </CardFooter>
             </Card>
             <Center>
-                <Button type='submit' colorScheme='blue' w={cardMaxW} mt={4} onClick={onOpen}>Leave a comment</Button>
+                <Button type='submit' colorScheme='blue' w={cardMaxW} mt={4} onClick={commentModal.onOpen}>Leave a comment</Button>
             </Center>
             <Box mt={8} pb={20}>
                 {post.data?.comments.map(comment => {
@@ -126,7 +152,7 @@ export default function PostPage() {
                     )
                 })}
             </Box>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={commentModal.isOpen} onClose={commentModal.onClose}>
                 <Portal>
                     <ModalOverlay />
                     <ModalContent mx='4'>
@@ -139,7 +165,50 @@ export default function PostPage() {
 
                         <ModalFooter>
                             <Button colorScheme='blue' mr={3} onClick={handleCreateComment} isDisabled={isSubmitDisabled}>Submit</Button>
-                            <Button colorScheme='red' onClick={onClose}>Cancel</Button>
+                            <Button colorScheme='red' onClick={commentModal.onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Portal>
+            </Modal>
+            <Modal isOpen={editPostModal.isOpen} onClose={editPostModal.onClose}>
+                <Portal>
+                    <ModalOverlay />
+                    <ModalContent mx='4' as='form' onSubmit={handleEditPost}>
+                        <ModalHeader>Create Post</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <label htmlFor='title' className='visually-hidden'>Post title</label>
+                            <Input
+                                type='text'
+                                placeholder='Title'
+                                id='title'
+                                mb='1.5rem'
+                                defaultValue={post.data?.title}
+                                name='title'
+                            />
+
+                            <label htmlFor='tags' className='visually-hidden'>Post tags</label>
+                            <Input
+                                type='text'
+                                placeholder='Tags (ex: tag1, tag2, tag3, ...)'
+                                id='tags'
+                                mb='1.5rem'
+                                defaultValue={post.data?.tags}
+                                name='tags'
+                            />
+
+                            <label htmlFor='content' className='visually-hidden'>Post Content</label>
+                            <Textarea
+                                placeholder='My post'
+                                id='content'
+                                defaultValue={post.data?.content}
+                                name='content'
+                            />
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} type='submit' isLoading={isMutateEditPostPending}>Submit</Button>
+                            <Button colorScheme='red' onClick={editPostModal.onClose} isLoading={isMutateEditPostPending}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Portal>

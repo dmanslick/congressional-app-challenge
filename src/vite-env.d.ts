@@ -38,6 +38,20 @@ interface CreatePostArgs {
     content: string
 }
 
+interface EditPostArgs {
+    title: string,
+    tags: string[]
+    content: string,
+    id: string
+}
+
+interface EditCommentArgs {
+    username: string
+    content: string
+    postId: string
+    commentId: string
+}
+
 interface DeleteCommentArgs {
     username: string
     content: string

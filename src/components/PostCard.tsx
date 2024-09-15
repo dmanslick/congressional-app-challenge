@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, CardHeader, Flex, Tag, Text } from '@chakra-ui/react'
+import { Card, CardBody, CardFooter, CardHeader, Flex, HStack, Tag, Text } from '@chakra-ui/react'
 import { MessageSquareIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -19,8 +19,11 @@ export default function PostCard(props: Post) {
                     })}
                 </Flex>
             </CardBody>
-            <CardFooter ml='auto' color='#bababa' display='flex' flexDir='row' alignItems='center' gap={2}>
-                <MessageSquareIcon /><Text>{props?.comments?.length}</Text>
+            <CardFooter color='#bababa' display='flex' flexDir='row' alignItems='center' justifyContent='space-between' gap={2}>
+                <Text>{props.creationDate.toDate().toLocaleString().split(',')[0]}</Text>
+                <HStack>
+                    <MessageSquareIcon /><Text>{props?.comments?.length}</Text>
+                </HStack>
             </CardFooter>
         </Card>
     )

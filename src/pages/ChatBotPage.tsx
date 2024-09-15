@@ -69,7 +69,7 @@ export default function ChatBotPage() {
 
     return (
         <>
-            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='400px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
+            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='384px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
                 {history && [...history].reverse().map((message, i) => {
                     if (message.role == 'model') {
                         return <BotMessage key={i} text={message.text} />

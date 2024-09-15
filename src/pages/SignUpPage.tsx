@@ -1,5 +1,5 @@
 import { Stack, Input, Button, Box, Text, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel } from '@chakra-ui/react'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { register } from '../firebase/auth'
 
@@ -13,7 +13,8 @@ export default function SignUpPage() {
         'Diagnosis Date': '',
         'Sensory Sensitivities': '',
         'Current Therapies': '',
-        'Preferred Calming Techniques': ''
+        'Preferred Calming Techniques': '',
+        'Primary Method of Communication': ''
     })
 
     const handleRegister = (e: FormEvent) => {
@@ -25,18 +26,26 @@ export default function SignUpPage() {
         }
     }
 
+    useEffect(() => {
+        console.log(data)
+    }, [data])
+
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.placeholder)
+        setData(prev => {
+            return { ...prev, ...{ [e.target.placeholder]: e.target.value } }
+        })
     }
 
     const handleRadio = (value: string) => {
-
+        setData(prev => {
+            return { ...prev, ...{ 'Primary Method of Communication': value } }
+        })
     }
 
     return (
-        <Box display='flex' alignItems='center' justifyContent='center' h='100vh' width='calc(100% - 32px)' marginInline='auto'>
+        <Box display='flex' alignItems='center' justifyContent='center' minH='100vh' width='calc(100% - 32px)' marginInline='auto'>
             <Tabs>
-                <TabList w='fit-content' mx='auto'>
+                <TabList w='fit-content' mx='auto' my={4}>
                     <Tab>Account Info</Tab>
                     <Tab>Child Info</Tab>
                 </TabList>
@@ -45,7 +54,6 @@ export default function SignUpPage() {
                     <TabPanel>
                         <Box>
                             <Stack gap='1rem' w='100%'>
-                                <Text fontSize='x-large' fontWeight={500} textAlign='center'>Please Register</Text>
                                 <Input placeholder='Name' type='text' onChange={handleInput} />
                                 <Input placeholder='Email' type='email' onChange={handleInput} />
                                 <Input placeholder='Password' type='password' onChange={handleInput} />
@@ -74,7 +82,7 @@ export default function SignUpPage() {
                                     </Stack>
                                 </RadioGroup>
                             </FormControl>
-                            <Button colorScheme='blue' textAlign='center' type='submit'>Register</Button>
+                            <Button colorScheme='blue' textAlign='center' type='submit' my={3}>Register</Button>
                         </Stack>
                     </TabPanel>
                 </TabPanels>

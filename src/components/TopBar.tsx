@@ -27,7 +27,7 @@ export default function TopBar() {
                     <Portal>
                         <MenuList>
                             <MenuItem onClick={() => navigate('/app/improve')}>Help Us Improve</MenuItem>
-                            <MenuItem>View Profile</MenuItem>
+                            <MenuItem onClick={() => navigate('/app/profile')}>View Profile</MenuItem>
                             <MenuItem onClick={onOpen}>Logout</MenuItem>
                         </MenuList>
                     </Portal>

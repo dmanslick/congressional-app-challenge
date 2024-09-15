@@ -1,5 +1,5 @@
 import { FormEvent, useRef, useState } from 'react'
-import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
@@ -119,7 +119,15 @@ export default function PostPage() {
                 <CardBody mt={-6}>
                     <Text color='grey'>{post.data?.content}</Text>
                 </CardBody>
-                <CardFooter mt={-6} ml='auto' color='#bababa' display='flex' flexDir='row' justifyContent='space-between' w='100%'>
+                <CardFooter mt={-6} ml='auto' color='#bababa' display='flex' flexDir='column' w='100%'>
+                    <Flex justifyContent='space-between'>
+                        <Box mr='auto'>
+                            <Text>{post.data?.creationDate.toDate().toLocaleString().split(',')[0]}</Text>
+                        </Box>
+                        <Box display='flex' flexDir='row' alignItems='center' gap={2}>
+                            <MessageSquareIcon /><Text>{post.data?.comments.length}</Text>
+                        </Box>
+                    </Flex>
                     {post.data?.username == user?.displayName && (
                         <Menu autoSelect={false}>
                             <MenuButton
@@ -128,6 +136,8 @@ export default function PostPage() {
                                 icon={<EllipsisIcon />}
                                 variant='ghost'
                                 size='xs'
+                                alignSelf='end'
+                                mt={4}
                             />
                             <Portal>
                                 <MenuList>
@@ -137,9 +147,6 @@ export default function PostPage() {
                             </Portal>
                         </Menu>
                     )}
-                    <Box display='flex' flexDir='row' alignItems='center' gap={2}>
-                        <MessageSquareIcon /><Text>{post.data?.comments.length}</Text>
-                    </Box>
                 </CardFooter>
             </Card>
             <Center>

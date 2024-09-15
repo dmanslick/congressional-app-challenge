@@ -1,5 +1,6 @@
-import { auth } from './firebase'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth, db } from './firebase'
+import { addDoc, collection, Timestamp } from 'firebase/firestore'
 
 export const login = async (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
@@ -16,4 +17,5 @@ export const register = async (data: RegisterArgs) => {
             displayName: data['Name'],
         })
     })
+    await addDoc(collection(db, 'userInfo'), { ...data, ...{ creationDate: Timestamp.fromDate(new Date()) } })
 }

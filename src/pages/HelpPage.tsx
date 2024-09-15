@@ -2,12 +2,12 @@ import React from 'react'
 import { Box, Heading, Text, VStack, HStack, Image, Select, SimpleGrid, Container, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, Flex, Card, CardBody, CardFooter, Accordion, AccordionItem, AccordionButton, AccordionPanel, ModalFooter } from '@chakra-ui/react'
 import { ChevronRight } from 'lucide-react'
 
-const autismCenters: AutismCenterProps[] = [
-    { name: "Autism Center A", image: "/api/placeholder/300/200", location: "New York, NY", phone: "(123) 456-7890" },
-    { name: "Autism Center B", image: "/api/placeholder/300/200", location: "Los Angeles, CA", phone: "(987) 654-3210" },
-    { name: "Autism Center C", image: "/api/placeholder/300/200", location: "Chicago, IL", phone: "(456) 789-0123" },
-    { name: "Autism Center D", image: "/api/placeholder/300/200", location: "Houston, TX", phone: "(789) 012-3456" },
-]
+// const autismCenters: AutismCenterProps[] = [
+//     { name: "Autism Center A", image: "/api/placeholder/300/200", location: "New York, NY", phone: "(123) 456-7890" },
+//     { name: "Autism Center B", image: "/api/placeholder/300/200", location: "Los Angeles, CA", phone: "(987) 654-3210" },
+//     { name: "Autism Center C", image: "/api/placeholder/300/200", location: "Chicago, IL", phone: "(456) 789-0123" },
+//     { name: "Autism Center D", image: "/api/placeholder/300/200", location: "Houston, TX", phone: "(789) 012-3456" },
+// ]
 
 const quickLinks: { label: string; url: string }[] = [
     { label: "Autism Symptoms", url: "#" },
@@ -57,23 +57,23 @@ const faqData = [
     },
 ]
 
-interface AutismCenterProps {
-    name: string
-    image: string
-    location: string
-    phone: string
-}
+// interface AutismCenterProps {
+//     name: string
+//     image: string
+//     location: string
+//     phone: string
+// }
 
-const AutismCenter: React.FC<AutismCenterProps> = ({ name, image, location, phone }) => (
-    <Card maxW='sm' boxShadow='md' borderRadius='lg' overflow='hidden'>
-        <Image src={image} alt={name} height='150px' objectFit='cover' />
-        <CardBody>
-            <Heading size='md' mb={2}>{name}</Heading>
-            <Text fontSize='sm' mb={1}>{location}</Text>
-            <Text fontSize='sm' fontWeight='bold'>{phone}</Text>
-        </CardBody>
-    </Card>
-)
+// const AutismCenter: React.FC<AutismCenterProps> = ({ name, image, location, phone }) => (
+//     <Card maxW='sm' boxShadow='md' borderRadius='lg' overflow='hidden'>
+//         <Image src={image} alt={name} height='150px' objectFit='cover' />
+//         <CardBody>
+//             <Heading size='md' mb={2}>{name}</Heading>
+//             <Text fontSize='sm' mb={1}>{location}</Text>
+//             <Text fontSize='sm' fontWeight='bold'>{phone}</Text>
+//         </CardBody>
+//     </Card>
+// )
 
 interface ArticlePreviewProps {
     title: string
@@ -126,8 +126,6 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ title, description, url
 }
 
 export default function HelpPage() {
-
-
     return (
         <Box>
             <Box bg='blue.500' color='white' py={8} px={4} textAlign='center'>

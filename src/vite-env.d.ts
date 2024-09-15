@@ -2,10 +2,7 @@
 
 interface Post {
     id: string
-    creationDate: {
-        seconds: number,
-        nanoseconds: number
-    }
+    creationDate: any
     title: string
     content: string
     tags: string[]
@@ -73,4 +70,5 @@ interface RegisterArgs {
     'Sensory Sensitivities': string
     'Current Therapies': string
     'Preferred Calming Techniques': string
+    'Primary Method of Communication': string
 }

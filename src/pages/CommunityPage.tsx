@@ -129,10 +129,10 @@ export default function CommunityPage() {
           </MotionBox>
 
           <Flex justify="center" gap={4}>
-            <Button colorScheme="blue" onClick={onOpen} leftIcon={<Search />}>
+            <Button colorScheme="purple" onClick={onOpen} leftIcon={<Search />}>
               Create Post
             </Button>
-            <Button colorScheme="teal" onClick={() => navigate('/app/chatbot')}>
+            <Button colorScheme="purple" onClick={() => navigate('/app/chatbot')}>
               Ask Kora AI
             </Button>
           </Flex>

@@ -108,7 +108,7 @@ const HomePage: React.FC = () => {
     const gridColumns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
   
     return (
-      <Box bg={bgColor} minHeight="100vh">
+      <Box bg={bgColor} minHeight="100vh" marginBottom={6}>
         <Container maxW="container.xl" pt={{ base: 16, md: 20 }} pb={8}>
           <VStack spacing={8} align="stretch">
             <ScaleFade initialScale={0.9} in={true}>

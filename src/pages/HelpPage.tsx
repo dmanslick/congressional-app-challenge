@@ -43,7 +43,7 @@ const faqData = [
     {
         question: "What are the signs of autism in children?",
         answer:
-            "Early signs of autism in children can include difficulty with communication, social interaction, and repetitive behaviors. If you have concerns, speak to your child's doctor.",
+            "Early signs of autism in children can include difficulty with communication, social interaction, and repetitive behaviors. If you have concerns, speak to your child's doctor or just ask Kora AI!",
     },
     {
         question: "What types of support are available for children with autism?",

@@ -1,23 +1,47 @@
-import { FormEvent, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Box, Button, Center, Input, Spinner, Text } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { AbsoluteCenter, Box, Button, Center, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { SearchIcon } from 'lucide-react'
 import { getPosts } from '../utils/getPosts'
 import PostCard from '../components/PostCard'
+import { useUser } from '../firebase/useUser'
+import { createPost } from '../utils/createPost'
+import { Timestamp } from 'firebase/firestore'
 
 export default function CommunityPage() {
-    const [searchQuery, setSearchQuery] = useState('')
+    const { user } = useUser()
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [content, setContent] = useState('')
+    const [title, setTitle] = useState('')
+    const [tags, setTags] = useState([] as string[])
     const [results, setResults] = useState<Post[] | undefined>(undefined)
+    const queryClient = useQueryClient()
     const posts = useQuery({
         queryKey: ['posts'],
         queryFn: () => getPosts(),
         // refetchInterval: 1000 * 30,
         refetchOnMount: true,
-        staleTime: 1000 * 60,
+        // staleTime: 1000 * 60,
     })
 
-    const searchPosts = (e: FormEvent) => {
-        e.preventDefault()
+    const { mutate, isPending } = useMutation({
+        mutationFn: createPost,
+        onSuccess: (id, variables) => {
+            const newPost = [{ id, comments: [], creationDate: Timestamp.fromDate(new Date()), ...variables }]
+            queryClient.setQueryData(['posts'], (prev: Post[]) => {
+                // console.log([...prev, ...newPost])
+                return [...prev, ...newPost]
+            })
+            queryClient.invalidateQueries({ queryKey: ['posts'] })
+            onClose()
+        }
+    })
+
+    useEffect(() => {
+        console.log(posts.data)
+    }, [posts])
+
+    const searchPosts = (searchQuery: string) => {
         if (!searchQuery) setResults(undefined)
         const filtered = posts.data?.filter(({ title, content }) => {
             return title.toLowerCase().includes(searchQuery.toLowerCase()) || content.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,33 +49,70 @@ export default function CommunityPage() {
         setResults(filtered)
     }
 
+    const handleCreatePost = () => mutate({ username: user?.displayName as string, title, tags, content })
+
+    const handleClose = () => {
+        onClose()
+        setTitle('')
+        setTags([])
+        setContent('')
+    }
+
     return (
         <>
             <Box w='100%' bg='blue.500' color='white' pt={4} pb={5} display='flex' flexDir='column' alignItems='center' gap={3} mt='56px'>
                 <Text fontWeight='semibold' fontSize='x-large'>Our Community</Text>
-                <form style={{ maxWidth: 320, display: 'flex', flexDirection: 'row', gap: 4 }} onSubmit={searchPosts}>
-                    <Input bg='white' color='black' placeholder='Search' onChange={e => setSearchQuery(e.target.value)} zIndex='revert-layer' />
+                <Box maxW='320px' w='100%' display='flex' alignItems='center' gap={2}>
+                    <Input bg='white' color='black' placeholder='Search' onChange={e => searchPosts(e.target.value)} zIndex='revert-layer' />
                     <Button type='submit' aria-label='Search Icon'>
                         <SearchIcon aria-label='Search Button Icon' />
                     </Button>
-                </form>
+                </Box>
             </Box>
             <Center>
-                <Button mt={4} maxW='320px' w='100%' colorScheme='blue'>Create Post</Button>
+                <Button mt={4} maxW='320px' w='100%' colorScheme='blue' onClick={onOpen}>Create Post</Button>
             </Center>
-            <Box mt={4}>
+            <Box mt={4} pb={20}>
                 {posts.isLoading && (
                     <Center>
                         <Spinner color='blue.500' />
                     </Center>
                 )}
-                {results && (
-                    results.map(post => <PostCard {...post} />)
-                )}
-                {posts && (
-                    posts.data?.map(post => <PostCard {...post} />)
-                )}
+                <Stack spacing='1rem'>
+                    {results ? (
+                        <>
+                            {results.length == 0 && <AbsoluteCenter><Text>No Results</Text></AbsoluteCenter>}
+                            {results.length > 0 && results.map(post => <PostCard {...post} />)}
+                        </>
+                    ) : (
+                        posts.data?.map(post => <PostCard {...post} />)
+                    )}
+                </Stack>
             </Box>
+            <Modal isOpen={isOpen} onClose={handleClose}>
+                <Portal>
+                    <ModalOverlay />
+                    <ModalContent mx='4'>
+                        <ModalHeader>Create Post</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <label htmlFor='title' className='visually-hidden'>Post title</label>
+                            <Input type='text' placeholder='Title' id='title' mb='1.5rem' onChange={e => setTitle(e.target.value)} />
+
+                            <label htmlFor='tags' className='visually-hidden'>Post tags</label>
+                            <Input type='text' placeholder='Tags (ex: tag1, tag2, tag3, ...)' id='tags' mb='1.5rem' onChange={e => setTags(e.target.value.split(/,\s*/))} />
+
+                            <label htmlFor='content' className='visually-hidden'>Post Content</label>
+                            <Textarea placeholder='My post' id='content' onChange={e => setContent(e.target.value)} />
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isLoading={isPending} isDisabled={title.length == 0 || content.length == 0}>Submit</Button>
+                            <Button colorScheme='red' onClick={handleClose} isLoading={isPending}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Portal>
+            </Modal>
         </>
     )
 }

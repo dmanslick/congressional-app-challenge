@@ -1,8 +1,8 @@
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
 
-export const createComment = async ({ id, username, content }: CreateCommentArgs) => {
+export const createComment = async ({ id, username, content, commentId }: CreateCommentArgs) => {
     await updateDoc(doc(db, 'posts', id), {
-        comments: arrayUnion(JSON.stringify({ username, content }))
+        comments: arrayUnion({ username, content, id: commentId })
     })
 }

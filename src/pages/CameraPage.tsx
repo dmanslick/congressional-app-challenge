@@ -50,7 +50,6 @@ export default function CameraPage() {
                         const predictions = emotions.map((emotion, i) => {
                             return { emotion, confidence: results[i] }
                         })
-                        // console.log(predictions)
                         setPredictions(predictions)
                         setLoading(false)
                     } catch (error) {

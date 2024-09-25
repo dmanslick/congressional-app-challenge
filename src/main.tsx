@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 
+
 defineCustomElements(window)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

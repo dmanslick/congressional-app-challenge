@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AbsoluteCenter, Box, Button, Center, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { SearchIcon } from 'lucide-react'
@@ -29,17 +29,12 @@ export default function CommunityPage() {
         onSuccess: (id, variables) => {
             const newPost = [{ id, comments: [], creationDate: Timestamp.fromDate(new Date()), ...variables }]
             queryClient.setQueryData(['posts'], (prev: Post[]) => {
-                // console.log([...prev, ...newPost])
                 return [...prev, ...newPost]
             })
             queryClient.invalidateQueries({ queryKey: ['posts'] })
             onClose()
         }
     })
-
-    useEffect(() => {
-        console.log(posts.data)
-    }, [posts])
 
     const searchPosts = (searchQuery: string) => {
         if (!searchQuery) setResults(undefined)

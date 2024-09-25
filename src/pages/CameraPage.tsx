@@ -24,7 +24,7 @@ export default function CameraPage() {
             setLoading(true)
             setPredictions([])
             const image = await Camera.getPhoto({
-                quality: 90,
+                quality: 100,
                 allowEditing: true,
                 resultType: CameraResultType.DataUrl,
                 saveToGallery: true

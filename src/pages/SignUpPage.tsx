@@ -1,5 +1,5 @@
-import { Stack, Input, Button, Box, Text, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel } from '@chakra-ui/react'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { Stack, Input, Button, Box, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel } from '@chakra-ui/react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { register } from '../firebase/auth'
 
@@ -25,10 +25,6 @@ export default function SignUpPage() {
             console.log('did not work')
         }
     }
-
-    useEffect(() => {
-        console.log(data)
-    }, [data])
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setData(prev => {

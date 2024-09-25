@@ -1,9 +1,10 @@
-import { Button, Center, FormControl, FormLabel, Input, Radio, RadioGroup, Stack, Spinner, Heading, useToast } from '@chakra-ui/react'
+import { Button, Center, FormControl, FormLabel, Input, Radio, RadioGroup, Stack, Spinner, Heading, useToast, Box, Link as ChakraLink, AbsoluteCenter } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { getProfile } from '../utils/getProfile'
 import { useUser } from '../firebase/useUser'
 import { editProfile } from '../utils/editProfile'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ChevronLeft } from 'lucide-react'
 
 export default function ProfilePage() {
     const { user } = useUser()
@@ -39,18 +40,26 @@ export default function ProfilePage() {
     useEffect(() => {
         const fetchData = async () => {
             const profile = await getProfile({ userId: user?.uid! })
+            console.log(profile)
             setData(profile)
         }
 
         fetchData()
     }, [user])
 
+    const goBack = () => navigate(-1)
+
     return (
         <>
             {data == null && <Spinner />}
             {data && (
-                <Center>
-                    <Stack gap='1rem' w='calc(100vw - 48px)' bg='white' p='1rem' my='5rem' mx='auto' rounded='md' as='form' onSubmit={handleUpdate}>
+                <>
+                    <Box mt='4.5rem' ml={2} w='fit-content'>
+                        <ChakraLink as={Link} onClick={goBack} display='flex' color='blue.500' alignItems='center'>
+                            <ChevronLeft height={24} width={24} /><span>Back</span>
+                        </ChakraLink>
+                    </Box>
+                    <Stack gap='1rem' w='calc(100vw - 48px)' bg='white' p='1rem' mt='1rem' mx='auto' rounded='md' as='form' onSubmit={handleUpdate}>
                         <Heading textAlign='center'>My Profile</Heading>
                         <FormControl>
                             <FormLabel>Child Name:</FormLabel>
@@ -90,7 +99,7 @@ export default function ProfilePage() {
                         </FormControl>
                         <Button colorScheme='blue' textAlign='center' type='submit' my={3}>Save Changes</Button>
                     </Stack>
-                </Center>
+                </>
             )}
         </>
     )

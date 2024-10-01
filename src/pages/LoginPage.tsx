@@ -23,8 +23,8 @@ export default function LoginPage() {
                     <Text fontSize='x-large' fontWeight={500} textAlign='center'>Please Login</Text>
                     <Input placeholder='Email' type='email' onChange={e => setEmail(e.target.value)} />
                     <Input placeholder='Password' type='password' onChange={e => setPassword(e.target.value)} />
-                    <Button colorScheme='blue' textAlign='center' type='submit'>Login</Button>
-                    <Link as={RouterLink} to='/register' fontSize='small' color='#3182ce' w='fit-content'>Sign Up</Link>
+                    <Button colorScheme='purple' textAlign='center' type='submit'>Login</Button>
+                    <Link as={RouterLink} to='/register' fontSize='small' color='purple.500' w='fit-content'>Sign Up</Link>
                 </Stack>
             </Box>
         </Box>

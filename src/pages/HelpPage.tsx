@@ -1,207 +1,108 @@
-import React from 'react'
-import { Box, Heading, Text, VStack, HStack, Image, Select, SimpleGrid, Container, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, Flex, Card, CardBody, CardFooter, Accordion, AccordionItem, AccordionButton, AccordionPanel, ModalFooter } from '@chakra-ui/react'
-import { ChevronRight } from 'lucide-react'
-
-// const autismCenters: AutismCenterProps[] = [
-//     { name: "Autism Center A", image: "/api/placeholder/300/200", location: "New York, NY", phone: "(123) 456-7890" },
-//     { name: "Autism Center B", image: "/api/placeholder/300/200", location: "Los Angeles, CA", phone: "(987) 654-3210" },
-//     { name: "Autism Center C", image: "/api/placeholder/300/200", location: "Chicago, IL", phone: "(456) 789-0123" },
-//     { name: "Autism Center D", image: "/api/placeholder/300/200", location: "Houston, TX", phone: "(789) 012-3456" },
-// ]
+import { Box, Heading, Text, VStack, Select, SimpleGrid, Container, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, useBreakpointValue, AccordionIcon, ScaleFade } from '@chakra-ui/react'
+import ArticlePreview from '../components/ArticlePreview'
+import { Link } from 'react-router-dom'
 
 const quickLinks: { label: string; url: string }[] = [
-    { label: "Autism Symptoms", url: "#" },
-    { label: "Treatment Options", url: "#" },
-    { label: "Support Groups", url: "#" },
-    { label: "Educational Resources", url: "#" },
+    { label: 'Autism Symptoms', url: 'https://www.cdc.gov/autism/signs-symptoms/index.html' },
+    { label: 'Treatment Options', url: 'https://autismsciencefoundation.org/treatment-options/' },
+    // { label: 'Support Groups', url: '#' },
+    { label: 'Educational Resources', url: 'https://researchautism.org/educators/educator-resources/' },
 ]
 
-const articles: ArticlePreviewProps[] = [
+const articles = [
     {
-        title: "Understanding Autism Spectrum Disorder",
-        description: "Learn about the characteristics and challenges of autism spectrum disorder.",
-        url: "#"
+        title: "Autism Spectrum Disorders (ASD)",
+        description: "An easy-to-understand guide to autism spectrum disorders, including common symptoms.",
+        url: "https://www.helpguide.org/mental-health/autism/autism-spectrum-disorders"
     },
     {
-        title: "Early Signs of Autism in Children",
-        description: "Recognize the early indicators of autism in young children.",
-        url: "#"
+        title: "Signs of Autism in Children",
+        description: "Learn about the early signs of autism spectrum disorder including signs of autism in babies, signs of autism in toddlers, when autism is diagnosed and more.",
+        url: "https://www.autismspeaks.org/signs-autism"
     },
     {
         title: "Autism and Social Skills Development",
-        description: "Strategies for improving social interactions for individuals with autism.",
-        url: "#"
-    },
-    {
-        title: "Supporting Autistic Adults in the Workplace",
-        description: "Tips for employers and colleagues to create an inclusive work environment.",
-        url: "#"
+        description: "Click here to read an excerpt on autism and social skills development from the Autism Speaks School Community Tool Kit.",
+        url: "https://www.autismspeaks.org/tool-kit-excerpt/autism-and-social-skills-development"
     },
 ]
 
 const faqData = [
     {
         question: "What are the signs of autism in children?",
-        answer:
-            "Early signs of autism in children can include difficulty with communication, social interaction, and repetitive behaviors. If you have concerns, speak to your child's doctor.",
+        answer: "Early signs of autism in children can include difficulty with communication, social interaction, and repetitive behaviors. If you have concerns, speak to your child's doctor or just ask Kora AI!",
     },
     {
         question: "What types of support are available for children with autism?",
-        answer:
-            "There are various support options available, including therapy, educational programs, and social skills groups. Talk to your child's doctor or a specialist to determine the best approach.",
+        answer: "There are various support options available, including therapy, educational programs, and social skills groups. Talk to your child's doctor or a specialist to determine the best approach.",
     },
     {
         question: "How can I get financial help for raising a child with autism?",
-        answer:
-            "Financial assistance options may vary depending on your location.  You can explore government programs, disability benefits, and fundraising options.",
+        answer: "Financial assistance options may vary depending on your location. You can explore government programs, disability benefits, and fundraising options.",
     },
 ]
 
-// interface AutismCenterProps {
-//     name: string
-//     image: string
-//     location: string
-//     phone: string
-// }
-
-// const AutismCenter: React.FC<AutismCenterProps> = ({ name, image, location, phone }) => (
-//     <Card maxW='sm' boxShadow='md' borderRadius='lg' overflow='hidden'>
-//         <Image src={image} alt={name} height='150px' objectFit='cover' />
-//         <CardBody>
-//             <Heading size='md' mb={2}>{name}</Heading>
-//             <Text fontSize='sm' mb={1}>{location}</Text>
-//             <Text fontSize='sm' fontWeight='bold'>{phone}</Text>
-//         </CardBody>
-//     </Card>
-// )
-
-interface ArticlePreviewProps {
-    title: string
-    description: string
-    url: string
-}
-
-const ArticlePreview: React.FC<ArticlePreviewProps> = ({ title, description, url }) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-
-    return (
-        <>
-            <Card
-                direction='column'
-                overflow='hidden'
-                variant='outline'
-                cursor='pointer'
-                onClick={onOpen}
-                _hover={{ boxShadow: 'md' }}
-                transition='all 0.2s'
-            >
-                <CardBody>
-                    <Heading size='md' mb={2}>{title}</Heading>
-                    <Text fontSize='sm' noOfLines={2}>{description}</Text>
-                </CardBody>
-                <CardFooter mt={-6}>
-                    <Button rightIcon={<ChevronRight size={16} />} colorScheme='blue' size='sm'>
-                        Read More
-                    </Button>
-                </CardFooter>
-            </Card>
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{title}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Text mb={4}>{description}</Text>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button as='a' href={url} target='_blank' colorScheme='blue' mr='auto'>
-                            Read Full Article
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
-    )
-}
-
 export default function HelpPage() {
+    const headingSize = useBreakpointValue({ base: '2xl', md: '3xl' })
+
     return (
-        <Box>
-            <Box bg='blue.500' color='white' py={8} px={4} textAlign='center'>
-                <Heading as='h1' size='xl' mb={1} mt={12}>
-                    Need Some HELP?
-                </Heading>
-                <Text fontSize='lg'>Kora is here!</Text>
-            </Box>
+        <ScaleFade initialScale={0.9} in={true}>
+            <Box minHeight='100vh'>
+                <Container maxW='container.xl' pt={20} mb={8}>
+                    <VStack spacing={8} align='stretch'>
+                        <Box position='relative' color='white' py={8} px={4} borderRadius='xl' boxShadow='xl' textAlign='center' overflow='hidden' display='flex' alignItems='center' justifyContent='center'>
+                            <Box position='absolute' top={0} left={0} right={0} bottom={0} bgGradient='linear-gradient(to top, #d799f7, #a699f7, #3f5fe0)' zIndex={1} />
+                            <VStack spacing={4} position='relative' zIndex={2}>
+                                <Heading size={headingSize}>Need Some Help?</Heading>
+                                <Text fontSize='md' maxW='xl' mx='auto'>
+                                    Kora is here to support you on your journey with autism understanding and care.
+                                </Text>
+                            </VStack>
+                        </Box>
 
-            <Container maxW='container.xl' py={8}>
-                <VStack spacing={8} align='stretch'>
-                    {/* <Box>
-                        <Heading as='h2' size='lg' mb={4}>
-                            Popular Autism Centers
-                        </Heading>
-                        <Flex overflowX='auto' pb={4}>
-                            <HStack spacing={4}>
-                                {autismCenters.map((center, index) => (
-                                    <AutismCenter key={index} {...center} />
+
+                        <Box>
+                            <Heading size='lg' mb={4}>Quick Links</Heading>
+                            <Select placeholder='Select a resource' bg='white' onChange={(e) => window.open(e.target.value, '_blank')} size='lg'>
+                                {quickLinks.map((link, index) => (
+                                    <option key={index} value={link.url}>
+                                        {link.label}
+                                    </option>
                                 ))}
-                            </HStack>
-                        </Flex>
-                    </Box> */}
+                            </Select>
+                        </Box>
 
-                    <Box>
-                        <Heading as='h2' size='lg' mb={4}>
-                            Quick Links
-                        </Heading>
-                        <Select
-                            placeholder='Select a resource'
-                            bg='white'
-                            // borderColor='blue.500'
-                            // _hover={{ borderColor: 'blue.600' }}
-                            onChange={(e) => window.open(e.target.value, '_blank')}
-                        >
-                            {quickLinks.map((link, index) => (
-                                <option key={index} value={link.url}>
-                                    {link.label}
-                                </option>
-                            ))}
-                        </Select>
-                    </Box>
+                        <Box>
+                            <Heading as='h2' size='lg' mb={4}>Learn More</Heading>
+                            <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing={6}>
+                                {articles.map((article, index) => (
+                                    <ArticlePreview {...article} key={index} />
+                                ))}
+                            </SimpleGrid>
+                        </Box>
 
-                    <Box>
-                        <Heading as='h2' size='lg' mb={4}>
-                            Learn More
-                        </Heading>
-                        <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
-                            {articles.map((article, index) => (
-                                <ArticlePreview key={index} {...article} />
-                            ))}
-                        </SimpleGrid>
-                    </Box>
+                        <Box mb={12}>
+                            <Heading as='h2' size='lg' textAlign='center' mb={4}>Frequently Asked Questions</Heading>
+                            <Accordion allowMultiple>
+                                {faqData.map((item, index) => (
+                                    <AccordionItem key={index} border='none'>
+                                        <AccordionButton bg='white' p={4}>
+                                            <Text textAlign='left' fontWeight='semibold'>
+                                                {item.question}
+                                            </Text>
 
-                    <Box marginBottom={10}>
-                        <Heading as='h2' size='lg' mb={4} textAlign='center'>
-                            Frequently Asked Questions
-                        </Heading>
-                        <Accordion allowMultiple bg='white' rounded='md' mb={4}>
-                            {faqData.map((item, index) => (
-                                <AccordionItem key={index}>
-                                    <AccordionButton>
-                                        <Box flex='1' textAlign='left'>
-                                            {item.question}
-                                        </Box>
-                                        <ChevronRight />
-                                    </AccordionButton>
-                                    <AccordionPanel>
-                                        {item.answer}
-                                    </AccordionPanel>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </Box>
-                </VStack>
-            </Container>
-        </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                        <AccordionPanel pb={4} pt={2} px={4}>
+                                            {item.answer}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        </Box>
+                    </VStack>
+                </Container>
+            </Box>
+        </ScaleFade>
     )
 }

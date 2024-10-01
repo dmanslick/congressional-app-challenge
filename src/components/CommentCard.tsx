@@ -87,7 +87,7 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} type='submit' isLoading={isMutateEditCommentPending}>Submit</Button>
+                            <Button colorScheme='purple' mr={3} type='submit' isLoading={isMutateEditCommentPending}>Submit</Button>
                             <Button colorScheme='red' onClick={editCommentModal.onClose} isLoading={isMutateEditCommentPending}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>

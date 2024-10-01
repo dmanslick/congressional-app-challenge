@@ -15,21 +15,44 @@ import HelpUsImprovePage from './pages/HelpUsImprovePage'
 import HelpPage from './pages/HelpPage'
 import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
+import ErrorPage from './pages/ErrorPage'
 
 const queryClient = new QueryClient()
+
+const theme = extendTheme({
+    components: {
+        Input: {
+            defaultProps: {
+                focusBorderColor: 'purple.500'
+            }
+        },
+
+        Radio: {
+            defaultProps: {
+                colorScheme: 'purple'
+            }
+        },
+
+        Textarea: {
+            defaultProps: {
+                focusBorderColor: 'purple.500'
+            }
+        }
+    }
+})
 
 export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <ModelProvider>
                     <HashRouter>
                         <Routes>
-                            <Route Component={UnauthLayout}>
+                            <Route Component={UnauthLayout} ErrorBoundary={ErrorPage}>
                                 <Route path='/' Component={LoginPage} />
                                 <Route path='/register' Component={SignUpPage} />
                             </Route>
-                            <Route path='/app' Component={AppLayout}>
+                            <Route path='/app' Component={AppLayout} ErrorBoundary={ErrorPage}>
                                 <Route path='improve' Component={HelpUsImprovePage} />
                                 <Route path='profile' Component={ProfilePage} />
                                 <Route path='help' Component={HelpPage} />

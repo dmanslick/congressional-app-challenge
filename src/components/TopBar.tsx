@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { Box, Menu, MenuButton, IconButton, MenuList, MenuItem, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Portal } from '@chakra-ui/react'
 import { MenuIcon } from 'lucide-react'
 import { logout } from '../firebase/auth'

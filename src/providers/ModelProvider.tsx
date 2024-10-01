@@ -16,6 +16,9 @@ export default function ModelProvider({ children }: { children: React.ReactNode 
     useEffect(() => {
         loadModel().then(mod => {
             setModel(mod)
+        }).then(() => {
+            const result = model?.predict(tf.zeros([1, 224, 224, 3])) as tf.Tensor
+            result.dataSync()
         })
 
         return () => model?.dispose()

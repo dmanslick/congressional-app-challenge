@@ -14,7 +14,7 @@ export default function PostCard(props: Post) {
                 <Flex gap={4} flexWrap='wrap' mt={4}>
                     {props.tags.map(tag => {
                         return (
-                            <Tag colorScheme='blue'>{tag}</Tag>
+                            <Tag colorScheme='purple'>{tag}</Tag>
                         )
                     })}
                 </Flex>

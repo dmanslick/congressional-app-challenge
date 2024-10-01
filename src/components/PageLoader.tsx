@@ -4,7 +4,7 @@ export default function PageLoader() {
     return (
         <Box minH='100vh'>
             <AbsoluteCenter>
-                <Spinner color='blue.500' />
+                <Spinner color='purple.500' />
             </AbsoluteCenter>
         </Box>
     )

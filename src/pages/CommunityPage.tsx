@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { AbsoluteCenter, Box, Button, Center, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Center, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, ScaleFade, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { SearchIcon } from 'lucide-react'
 import { getPosts } from '../utils/getPosts'
 import PostCard from '../components/PostCard'
@@ -54,23 +54,26 @@ export default function CommunityPage() {
     }
 
     return (
-        <>
-            <Box w='100%' bg='blue.500' color='white' pt={4} pb={5} display='flex' flexDir='column' alignItems='center' gap={3} mt='56px'>
-                <Text fontWeight='semibold' fontSize='x-large'>Our Community</Text>
-                <Box maxW='320px' w='100%' display='flex' alignItems='center' gap={2}>
-                    <Input bg='white' color='black' placeholder='Search' onChange={e => searchPosts(e.target.value)} zIndex='revert-layer' />
-                    <Button type='submit' aria-label='Search Icon'>
-                        <SearchIcon aria-label='Search Button Icon' />
-                    </Button>
+        <ScaleFade initialScale={0.9} in={true}>
+            <Box bg='linear-gradient(to top, #d799f7, #a699f7, #3f5fe0)' color='white' mt={20} mx={4} p={8} borderRadius='xl' boxShadow='xl' textAlign='center'>
+                <Heading size='2xl' mb={4}>Our Community</Heading>
+                <Text fontSize='lg' mb={6}>Connect, share, and learn with fellow parents and caregivers</Text>
+                <Box maxW='480px' mx='auto'>
+                    <Box maxW='320px' w='100%' display='flex' alignItems='center' gap={2}>
+                        <Input bg='white' color='black' placeholder='Search' onChange={e => searchPosts(e.target.value)} zIndex='revert-layer' />
+                        <Button type='submit' aria-label='Search Icon'>
+                            <SearchIcon aria-label='Search Button Icon' />
+                        </Button>
+                    </Box>
                 </Box>
             </Box>
             <Center>
-                <Button mt={4} maxW='320px' w='100%' colorScheme='blue' onClick={onOpen}>Create Post</Button>
+                <Button mt={4} maxW='320px' w='100%' colorScheme='purple' onClick={onOpen}>Create Post</Button>
             </Center>
             <Box mt={4} pb={20}>
                 {posts.isLoading && (
                     <Center>
-                        <Spinner color='blue.500' />
+                        <Spinner color='purple.500' />
                     </Center>
                 )}
                 <Stack spacing='1rem'>
@@ -102,12 +105,12 @@ export default function CommunityPage() {
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isLoading={isPending} isDisabled={title.length == 0 || content.length == 0}>Submit</Button>
+                            <Button colorScheme='purple' mr={3} onClick={handleCreatePost} isLoading={isPending} isDisabled={title.length == 0 || content.length == 0}>Submit</Button>
                             <Button colorScheme='red' onClick={handleClose} isLoading={isPending}>Cancel</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Portal>
             </Modal>
-        </>
+        </ScaleFade>
     )
 }

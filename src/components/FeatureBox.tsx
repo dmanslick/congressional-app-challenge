@@ -1,26 +1,28 @@
-import { Button, Box, Text } from '@chakra-ui/react'
+import { Button, Box, Text, useColorModeValue, VStack, Heading, Icon } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
 
-export default function FeatureBox({ title, description, link, buttonText }: { title: string, description: string, link: string, buttonText: string }) {
+export default function FeatureBox({ title, description, icon: IconComponent, to }: { title: string, description: string, icon: React.FC, to: string }) {
     return (
         <Box
-            key={title}
-            w='300px'
-            m={4}
-            p={8}
-            borderRadius='md'
-            bg='white'
-            boxShadow='0 4px 8px 0 rgba(0, 0, 0, 0.2)'
+            bg={useColorModeValue('white', 'gray.800')}
+            p={4}
+            borderRadius='lg'
+            boxShadow='md'
+            _hover={{ boxShadow: 'lg' }}
         >
-            <Box textAlign='center'>
-                <Text fontWeight='semibold'>{title}</Text>
-                <Text color='gray.500' fontSize='sm'>
-                    {description}
-                </Text>
-                <RouterLink to={link}>
-                    <Button colorScheme='blue' mt={4}>{buttonText}</Button>
-                </RouterLink>
-            </Box>
+            <VStack spacing={3} align='start'>
+                <Icon as={IconComponent} width={8} height={8} color={useColorModeValue('purple.500', 'purple.500')} />
+                <Heading size='sm'>{title}</Heading>
+                <Text fontSize='sm' color={useColorModeValue('gray.600', 'gray.300')}>{description}</Text>
+                <Button
+                    as={RouterLink}
+                    to={to}
+                    colorScheme='purple'
+                    size='sm'
+                >
+                    Explore
+                </Button>
+            </VStack>
         </Box>
     )
 }

@@ -5,7 +5,6 @@ import TopBar from '../components/TopBar'
 import BottomBar from '../components/BottomBar'
 import PageLoader from '../components/PageLoader'
 
-
 export default function AppLayout() {
     const { user } = useUser()
     const navigate = useNavigate()

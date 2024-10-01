@@ -40,7 +40,7 @@ export default function SignUpPage() {
 
     return (
         <Box display='flex' alignItems='center' justifyContent='center' minH='100vh' width='calc(100% - 32px)' marginInline='auto'>
-            <Tabs>
+            <Tabs colorScheme='purple'>
                 <TabList w='fit-content' mx='auto' my={4}>
                     <Tab>Account Info</Tab>
                     <Tab>Child Info</Tab>
@@ -53,7 +53,7 @@ export default function SignUpPage() {
                                 <Input placeholder='Name' type='text' onChange={handleInput} />
                                 <Input placeholder='Email' type='email' onChange={handleInput} />
                                 <Input placeholder='Password' type='password' onChange={handleInput} />
-                                <Link as={RouterLink} to='/' fontSize='small' color='#3182ce' w='fit-content'>Login</Link>
+                                <Link as={RouterLink} to='/' fontSize='small' color='purple.500' w='fit-content'>Login</Link>
                             </Stack>
                         </Box>
                     </TabPanel>
@@ -78,7 +78,7 @@ export default function SignUpPage() {
                                     </Stack>
                                 </RadioGroup>
                             </FormControl>
-                            <Button colorScheme='blue' textAlign='center' type='submit' my={3}>Register</Button>
+                            <Button colorScheme='purple' textAlign='center' type='submit' my={3}>Register</Button>
                         </Stack>
                     </TabPanel>
                 </TabPanels>

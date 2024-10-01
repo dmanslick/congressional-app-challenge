@@ -37,7 +37,7 @@ const navLinks: NavLink[] = [
 ]
 
 const inactiveColor = '#bababa'
-const activeColor = 'blue.500'
+const activeColor = 'purple.500'
 
 export default function BottomBar() {
     const location = useLocation()
@@ -48,7 +48,7 @@ export default function BottomBar() {
                 let condition = location.pathname == to
                 if (to == '/app/community') condition = condition || location.pathname.includes('/app/post')
                 return (
-                    <Link to={to} aria-label={ariaLabel}>
+                    <Link to={to} aria-label={ariaLabel} key={to}>
                         <Box color={String(condition ? activeColor : inactiveColor)}>
                             {component}
                         </Box>

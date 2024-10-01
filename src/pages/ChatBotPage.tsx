@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'
 import { useUser } from '../firebase/useUser'
-import { Box, Button, Flex, Textarea } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Flex, ScaleFade, Spinner, Textarea } from '@chakra-ui/react'
 import BotMessage from '../components/BotMessage'
 import UserMessage from '../components/UserMessage'
 import { SendIcon } from 'lucide-react'
@@ -27,7 +27,8 @@ export default function ChatBotPage() {
     const queryClient = useQueryClient()
     const { data: history, isLoading } = useQuery({
         queryKey: ['chatHistory', user?.uid],
-        queryFn: () => getChatHistory(user?.uid as string)
+        queryFn: () => getChatHistory(user?.uid as string),
+        retry: false,
     })
 
     const chat = useMemo(() => {
@@ -66,24 +67,41 @@ export default function ChatBotPage() {
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
+
+        return () => window.scrollTo(0, 0)
     }, [history])
+
+    useEffect(() => {
+        if (history == undefined) window.scrollTo(0, document.body.scrollHeight)
+    })
 
     return (
         <>
-            <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='384px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
-                {history && [...history].reverse().map((message, i) => {
-                    if (message.role == 'model') {
-                        return <BotMessage key={i} text={message.text} />
-                    }
-                    return <UserMessage key={i} text={message.text} />
-                })}
-            </Box>
-            <Flex position='fixed' bottom='56px' left='50%' transform='translateX(-50%)' direction='row' gap={2} mb={4} as='form' onSubmit={sendMessage} maxW='400px' width='calc(100vw - 1rem)'>
-                <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} value={message} />
-                <Button type='submit' aria-label='Search Icon' colorScheme='blue'>
-                    <SendIcon aria-label='Search Button Icon' />
-                </Button>
-            </Flex>
+            {isLoading && (
+                <AbsoluteCenter>
+                    <Spinner color='purple.500' />
+                </AbsoluteCenter>
+            )}
+            {!isLoading && (
+                <ScaleFade initialScale={0.9} in={true}>
+                    <Box display='flex' flexDir='column-reverse' minH='calc(100vh - 112px)' maxW='384px' w='calc(100vw - 1rem)' mx='auto' mb='120px' mt='64px'>
+                        {history && [...history].reverse().map((message, i) => {
+                            if (message.role == 'model') {
+                                return <BotMessage key={i} text={message.text} />
+                            }
+                            return <UserMessage key={i} text={message.text} />
+                        })}
+                    </Box>
+                </ScaleFade>
+            )}
+            <ScaleFade initialScale={0.9} in={true}>
+                <Flex position='fixed' bottom='56px' left='50%' transform='translateX(-50%)' direction='row' gap={2} mb={4} as='form' onSubmit={sendMessage} maxW='400px' width='calc(100vw - 1rem)'>
+                    <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} value={message} />
+                    <Button type='submit' aria-label='Search Icon' colorScheme='purple'>
+                        <SendIcon aria-label='Search Button Icon' />
+                    </Button>
+                </Flex>
+            </ScaleFade>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Camera, CameraResultType } from '@capacitor/camera'
-import { Box, Container, VStack, Heading, Text, Button, Image as ChakraImage, useColorModeValue, useToken, ScaleFade, Card, AbsoluteCenter, Spinner, Center } from '@chakra-ui/react'
+import { Box, VStack, Heading, Text, Button, Image as ChakraImage, useColorModeValue, useToken, ScaleFade, Card, AbsoluteCenter, Spinner } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import * as tf from '@tensorflow/tfjs'
 import { useModel } from '../providers/ModelProvider'

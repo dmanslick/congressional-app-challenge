@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { AbsoluteCenter, Box, Button, Center, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, ScaleFade, Spinner, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Center, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, ScaleFade, Spinner, Stack, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
 import { SearchIcon } from 'lucide-react'
 import { getPosts } from '../utils/getPosts'
 import PostCard from '../components/PostCard'
@@ -15,6 +15,7 @@ export default function CommunityPage() {
     const [title, setTitle] = useState('')
     const [tags, setTags] = useState([] as string[])
     const [results, setResults] = useState<Post[] | undefined>(undefined)
+    const toast = useToast()
     const queryClient = useQueryClient()
     const posts = useQuery({
         queryKey: ['posts'],
@@ -33,6 +34,11 @@ export default function CommunityPage() {
             })
             queryClient.invalidateQueries({ queryKey: ['posts'] })
             onClose()
+            toast({
+                title: 'Post Successfully Created!',
+                colorScheme: 'green',
+                isClosable: true
+            })
         }
     })
 

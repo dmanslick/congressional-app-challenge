@@ -1,17 +1,23 @@
 import { FormEvent, useState } from 'react'
-import { Box, Button, Input, Link, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Input, Link, Stack, Text, useToast } from '@chakra-ui/react'
 import { login } from '../firebase/auth'
 import { Link as RouterLink } from 'react-router-dom'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const toast = useToast()
 
-    const handleLogin = (e: FormEvent) => {
+    const handleLogin = async (e: FormEvent) => {
         e.preventDefault()
         try {
-            login(email, password)
+            await login(email, password)
         } catch (e) {
+            toast({
+                title: `${e}`,
+                colorScheme: 'red',
+                isClosable: true
+            })
             console.log('did not work')
         }
     }

@@ -6,6 +6,16 @@ import { editProfile } from '../utils/editProfile'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 
+const textInputs = [
+    'Child Name',
+    'Child Age',
+    'Diagnosis Date',
+    'Sensory Sensitivities',
+    'Current Therapies',
+    'Preferred Calming Techniques',
+    'Key Behavioral Traits'
+]
+
 export default function ProfilePage() {
     const { user } = useUser()
     const [data, setData] = useState<Profile | null>(null)
@@ -30,7 +40,7 @@ export default function ProfilePage() {
         if (data) {
             await editProfile({ data, userId: user?.uid! })
             toast({
-                title: 'Profile Successfully Updated',
+                title: 'Profile Successfully Updated!',
                 colorScheme: 'green',
                 isClosable: true
             })
@@ -66,39 +76,30 @@ export default function ProfilePage() {
                     </Box>
                     <Stack gap='1rem' w='calc(100vw - 48px)' bg='white' p='1rem' mt='1rem' mb='4.5rem' mx='auto' rounded='md' as='form' onSubmit={handleUpdate}>
                         <Heading textAlign='center'>My Profile</Heading>
-                        <FormControl>
-                            <FormLabel>Child Name:</FormLabel>
-                            <Input placeholder='Child Name' type='text' onChange={handleInput} value={data?.['Child Name']} />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Child Age:</FormLabel>
-                            <Input placeholder='Child Age' type='text' onChange={handleInput} defaultValue={data?.['Child Age']} />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Diagnosis Date:</FormLabel>
-                            <Input placeholder='Diagnosis Date' type='date' onChange={handleInput} defaultValue={data?.['Diagnosis Date']} />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Sensory Sensitivities</FormLabel>
-                            <Input placeholder='Sensory Sensitivities' type='text' onChange={handleInput} defaultValue={data?.['Sensory Sensitivities']} />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Current Therapies</FormLabel>
-                            <Input placeholder='Current Therapies' type='text' onChange={handleInput} defaultValue={data?.['Current Therapies']} />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Preferred Calming Techniques:</FormLabel>
-                            <Input placeholder='Preferred Calming Techniques' type='text' onChange={handleInput} defaultValue={data?.['Preferred Calming Techniques']} />
-                        </FormControl>
+                        {textInputs.map(key => {
+                            if (key == 'Diagnosis Date') {
+                                return (
+                                    <FormControl key={key}>
+                                        <FormLabel>{key}</FormLabel>
+                                        <Input placeholder={key} onChange={handleInput} type='date' value={data?.[key]} />
+                                    </FormControl>
+                                )
+                            }
+                            return (
+                                <FormControl key={key}>
+                                    <FormLabel>{key}</FormLabel>
+                                    <Input placeholder={key} onChange={handleInput} type='text' value={data?.[key as keyof Profile] as string} />
+                                </FormControl>
+                            )
+                        })}
                         <FormControl as='fieldset'>
                             <FormLabel as='legend'>Primary Method of Communication</FormLabel>
-                            <RadioGroup onChange={handleRadio} defaultValue={'Key Behavioral Traits'}>
+                            <RadioGroup onChange={handleRadio} value={data?.['Primary Method of Communication']}>
                                 <Stack spacing='24px'>
                                     <Radio value='Verbal'>Verbal</Radio>
                                     <Radio value='Non-verbal'>Non-verbal</Radio>
                                     <Radio value='Combination of both'>Combination of both</Radio>
                                     <Radio value='AAC Device'>AAC Device</Radio>
-                                    <Radio value='Key Behavioral Traits'>Key Behavioral Traits</Radio>
                                 </Stack>
                             </RadioGroup>
                         </FormControl>

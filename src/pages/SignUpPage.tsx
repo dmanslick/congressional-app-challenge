@@ -1,7 +1,17 @@
-import { Stack, Input, Button, Box, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel } from '@chakra-ui/react'
+import { Stack, Input, Button, Box, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel, useToast } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { register } from '../firebase/auth'
+
+const textInputs = [
+    'Child Name',
+    'Child Age',
+    'Diagnosis Date',
+    'Sensory Sensitivities',
+    'Current Therapies',
+    'Preferred Calming Techniques',
+    'Key Behavioral Traits'
+]
 
 export default function SignUpPage() {
     const [data, setData] = useState({
@@ -16,12 +26,19 @@ export default function SignUpPage() {
         'Preferred Calming Techniques': '',
         'Primary Method of Communication': ''
     })
+    const toast = useToast()
 
-    const handleRegister = (e: FormEvent) => {
+    const handleRegister = async (e: FormEvent) => {
         e.preventDefault()
         try {
-            register(data)
+            if (Object.values(data).some(val => val == '')) throw new Error('Please Fill Out Everything')
+            await register(data)
         } catch (e) {
+            toast({
+                title: `${e}`,
+                colorScheme: 'red',
+                isClosable: true
+            })
             console.log('did not work')
         }
     }
@@ -60,12 +77,22 @@ export default function SignUpPage() {
 
                     <TabPanel>
                         <Stack gap='1rem' w='100%'>
-                            <Input placeholder='Child Name' type='text' onChange={handleInput} />
-                            <Input placeholder='Child Age' type='text' onChange={handleInput} />
-                            <Input placeholder='Diagnosis Date' type='date' onChange={handleInput} />
-                            <Input placeholder='Sensory Sensitivities' type='text' onChange={handleInput} />
-                            <Input placeholder='Current Therapies' type='text' onChange={handleInput} />
-                            <Input placeholder='Preferred Calming Techniques' type='text' onChange={handleInput} />
+                            {textInputs.map(key => {
+                                if (key == 'Diagnosis Date') {
+                                    return (
+                                        <FormControl key={key}>
+                                            <FormLabel>{key}</FormLabel>
+                                            <Input placeholder={key} onChange={handleInput} type='date' />
+                                        </FormControl>
+                                    )
+                                }
+                                return (
+                                    <FormControl key={key}>
+                                        <FormLabel>{key}</FormLabel>
+                                        <Input placeholder={key} onChange={handleInput} type='text' />
+                                    </FormControl>
+                                )
+                            })}
                             <FormControl as='fieldset'>
                                 <FormLabel as='legend'>Primary Method of Communication</FormLabel>
                                 <RadioGroup onChange={handleRadio}>
@@ -74,7 +101,6 @@ export default function SignUpPage() {
                                         <Radio value='Non-verbal'>Non-verbal</Radio>
                                         <Radio value='Combination of both'>Combination of both</Radio>
                                         <Radio value='AAC Device'>AAC Device</Radio>
-                                        <Radio value='Key Behavioral Traits'>Key Behavioral Traits</Radio>
                                     </Stack>
                                 </RadioGroup>
                             </FormControl>

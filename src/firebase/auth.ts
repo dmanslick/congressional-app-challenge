@@ -3,11 +3,11 @@ import { auth, db } from './firebase'
 import { doc, setDoc, Timestamp } from 'firebase/firestore'
 
 export const login = async (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(auth, email, password)
 }
 
 export const logout = async () => {
-    auth.signOut()
+    return auth.signOut()
 }
 
 export const register = async (data: RegisterArgs) => {

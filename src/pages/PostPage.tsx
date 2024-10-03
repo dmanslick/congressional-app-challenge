@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, ScaleFade, Spinner, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { AbsoluteCenter, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, IconButton, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, ScaleFade, Spinner, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getPost } from '../utils/getPost'
@@ -25,6 +25,7 @@ export default function PostPage() {
     const { user } = useUser()
     const isSubmitDisabled = content == ''
     const navigate = useNavigate()
+    const toast = useToast()
 
     const post = useQuery({
         queryKey: ['post', id],
@@ -51,6 +52,11 @@ export default function PostPage() {
                 prev.filter(old => old.id == id)
             })
             navigate('/app/community')
+            toast({
+                title: 'Post Successfully Deleted!',
+                colorScheme: 'green',
+                isClosable: true
+            })
         }
     })
 
@@ -61,6 +67,11 @@ export default function PostPage() {
                 return { ...prev, ...variables }
             })
             editPostModal.onClose()
+            toast({
+                title: 'Post Successfully Edited!',
+                colorScheme: 'green',
+                isClosable: true
+            })
         }
     })
 

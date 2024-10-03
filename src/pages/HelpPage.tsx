@@ -1,6 +1,5 @@
-import { Box, Heading, Text, VStack, Select, SimpleGrid, Container, Button, Accordion, AccordionItem, AccordionButton, AccordionPanel, useBreakpointValue, AccordionIcon, ScaleFade } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack, Select, SimpleGrid, Container, Accordion, AccordionItem, AccordionButton, AccordionPanel, useBreakpointValue, AccordionIcon, ScaleFade } from '@chakra-ui/react'
 import ArticlePreview from '../components/ArticlePreview'
-import { Link } from 'react-router-dom'
 
 const quickLinks: { label: string; url: string }[] = [
     { label: 'Autism Symptoms', url: 'https://www.cdc.gov/autism/signs-symptoms/index.html' },

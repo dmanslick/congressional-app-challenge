@@ -59,7 +59,7 @@ export default function CommunityPage() {
                 <Heading size='2xl' mb={4}>Our Community</Heading>
                 <Text fontSize='lg' mb={6}>Connect, share, and learn with fellow parents and caregivers</Text>
                 <Box maxW='480px' mx='auto'>
-                    <Box maxW='320px' w='100%' display='flex' alignItems='center' gap={2}>
+                    <Box maxW='320px' w='100%' display='flex' mx='auto' alignItems='center' gap={2}>
                         <Input bg='white' color='black' placeholder='Search' onChange={e => searchPosts(e.target.value)} zIndex='revert-layer' />
                         <Button type='submit' aria-label='Search Icon'>
                             <SearchIcon aria-label='Search Button Icon' />

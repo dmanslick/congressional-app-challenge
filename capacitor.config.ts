@@ -1,9 +1,9 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'com.congressional.app',
-  appName: 'congressional-app-chakra',
+  appId: 'com.kora.app',
+  appName: 'Kora',
   webDir: 'dist'
-};
+}
 
-export default config;
+export default config

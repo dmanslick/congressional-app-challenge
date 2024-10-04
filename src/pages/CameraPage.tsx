@@ -79,17 +79,20 @@ export default function CameraPage() {
         }
     }
 
+    if (loading == true) console.log('loading')
 
     return (
-        <ScaleFade initialScale={0.9} in={true}>
+        <>
             {!hidden && (
-                <Box position='relative' color='white' mx='auto' maxW='332px' mt={20} py={16} px={8} borderRadius='xl' boxShadow='xl' textAlign='center' overflow='hidden'>
-                    <Box position='absolute' top={0} left={0} right={0} bottom={0} bgGradient='linear-gradient(to right, #d799f7, #a699f7, #3f5fe0)' zIndex={1} />
-                    <VStack spacing={4} position='relative' zIndex={2}>
-                        <Heading size='2xl'>Emotion Detection</Heading>
-                        <Text fontSize='xl'>Capture and analyze emotions in real-time</Text>
-                    </VStack>
-                </Box>
+                <ScaleFade initialScale={0.9} in={true}>
+                    <Box position='relative' color='white' mx='auto' maxW='332px' mt={20} py={16} px={8} borderRadius='xl' boxShadow='xl' textAlign='center' overflow='hidden'>
+                        <Box position='absolute' top={0} left={0} right={0} bottom={0} bgGradient='linear-gradient(to right, #d799f7, #a699f7, #3f5fe0)' zIndex={1} />
+                        <VStack spacing={4} position='relative' zIndex={2}>
+                            <Heading size='2xl'>Emotion Detection</Heading>
+                            <Text fontSize='xl'>Capture and analyze emotions in real-time</Text>
+                        </VStack>
+                    </Box>
+                </ScaleFade>
             )}
 
             {loading && (
@@ -99,47 +102,52 @@ export default function CameraPage() {
             )}
 
             {(!loading && !predictions) && (
-                <Box p={6} bg='white' mx='auto' rounded='md' mt={8} w='fit-content'>
-                    <Button leftIcon={<CameraIcon />} onClick={takePicture} size='md' w='fit-content' colorScheme='purple'>
-                        Take Picture
-                    </Button>
-                </Box>
+                <ScaleFade initialScale={0.9} in={true}>
+                    <Box p={6} bg='white' mx='auto' rounded='md' mt={8} w='fit-content'>
+                        <Button leftIcon={<CameraIcon />} onClick={takePicture} size='md' w='fit-content' colorScheme='purple'>
+                            Take Picture
+                        </Button>
+                    </Box>
+                </ScaleFade>
             )}
 
             {error && (
                 <Text color='red.500' textAlign='center'>{error}</Text>
             )}
 
-            {(predictions && !loading) && (
-                <Box pb={20}>
-                    <Card p={6} maxW='min(90vw, 400px)' mx='auto' mt={20} borderRadius='lg' boxShadow='md' display='block'>
-                        <VStack spacing={6}>
 
-                            <ChakraImage src={src} alt='Captured Image' borderRadius={6} maxH='300px' objectFit='cover' />
-                            <Heading size='lg' color={textColor}>Detected Emotions</Heading>
-                            {predictions.sort((a, b) => b.confidence - a.confidence).map(({ emotion, confidence }) => (
-                                <Box key={emotion} width='100%'>
-                                    <Text color={textColor} mb={2}>{emotion}</Text>
-                                    <Box width='100%' height='1rem' bg='gray.200' borderRadius='full' overflow='hidden'>
-                                        <motion.div
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${confidence * 100}%` }}
-                                            transition={{ duration: 0.5, ease: 'easeOut' }}
-                                            style={{
-                                                height: '100%',
-                                                backgroundColor: lineColor,
-                                            }}
-                                        />
+            {(predictions && !loading) && (
+                <ScaleFade initialScale={0.9} in={true}>
+                    <Box pb={20}>
+                        <Card p={6} maxW='min(90vw, 400px)' mx='auto' mt={20} borderRadius='lg' boxShadow='md' display='block'>
+                            <VStack spacing={6}>
+
+                                <ChakraImage src={src} alt='Captured Image' borderRadius={6} maxH='300px' objectFit='cover' />
+                                <Heading size='lg' color={textColor}>Detected Emotions</Heading>
+                                {predictions.sort((a, b) => b.confidence - a.confidence).map(({ emotion, confidence }) => (
+                                    <Box key={emotion} width='100%'>
+                                        <Text color={textColor} mb={2}>{emotion}</Text>
+                                        <Box width='100%' height='1rem' bg='gray.200' borderRadius='full' overflow='hidden'>
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${confidence * 100}%` }}
+                                                transition={{ duration: 0.5, ease: 'easeOut' }}
+                                                style={{
+                                                    height: '100%',
+                                                    backgroundColor: lineColor,
+                                                }}
+                                            />
+                                        </Box>
                                     </Box>
-                                </Box>
-                            ))}
-                            <Button leftIcon={<CameraIcon />} onClick={takePicture} size='md' mt={4} w='fit-content' colorScheme='purple'>
-                                Take Picture
-                            </Button>
-                        </VStack>
-                    </Card>
-                </Box>
+                                ))}
+                                <Button leftIcon={<CameraIcon />} onClick={takePicture} size='md' mt={4} w='fit-content' colorScheme='purple'>
+                                    Take Another Picture
+                                </Button>
+                            </VStack>
+                        </Card>
+                    </Box>
+                </ScaleFade>
             )}
-        </ScaleFade>
+        </>
     )
 }

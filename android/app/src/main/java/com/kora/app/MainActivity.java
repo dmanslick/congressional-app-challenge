@@ -1,4 +1,4 @@
-package com.congressional.app;
+package com.kora.app;
 
 import com.getcapacitor.BridgeActivity;
 

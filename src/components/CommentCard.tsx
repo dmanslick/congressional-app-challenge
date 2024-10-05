@@ -77,10 +77,11 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
                         <ModalHeader>Create Post</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <label htmlFor='content' className='visually-hidden'>Post Content</label>
+                            <label htmlFor='content'>Post Content</label>
                             <Textarea
                                 placeholder='My post'
                                 id='content'
+                                mt={1}
                                 defaultValue={data?.content}
                                 name='content'
                             />

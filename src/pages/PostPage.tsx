@@ -178,8 +178,8 @@ export default function PostPage() {
                             <ModalHeader>Comment</ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
-                                <label htmlFor='comment' className='visually-hidden'>Comment Content</label>
-                                <Textarea placeholder='My Comment' id='comment' onChange={e => setContent(e.target.value)} />
+                                <label htmlFor='comment'>Comment Content</label>
+                                <Textarea placeholder='My Comment' id='comment' mt={1} onChange={e => setContent(e.target.value)} />
                             </ModalBody>
 
                             <ModalFooter>
@@ -196,30 +196,33 @@ export default function PostPage() {
                             <ModalHeader>Create Post</ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
-                                <label htmlFor='title' className='visually-hidden'>Post title</label>
+                                <label htmlFor='title'>Post title</label>
                                 <Input
                                     type='text'
                                     placeholder='Title'
                                     id='title'
                                     mb='1.5rem'
+                                    mt={1}
                                     defaultValue={post.data?.title}
                                     name='title'
                                 />
 
-                                <label htmlFor='tags' className='visually-hidden'>Post tags</label>
+                                <label htmlFor='tags'>Post tags</label>
                                 <Input
                                     type='text'
                                     placeholder='Tags (ex: tag1, tag2, tag3, ...)'
                                     id='tags'
                                     mb='1.5rem'
+                                    mt={1}
                                     defaultValue={post.data?.tags}
                                     name='tags'
                                 />
 
-                                <label htmlFor='content' className='visually-hidden'>Post Content</label>
+                                <label htmlFor='content'>Post Content</label>
                                 <Textarea
                                     placeholder='My post'
                                     id='content'
+                                    mt={1}
                                     defaultValue={post.data?.content}
                                     name='content'
                                 />

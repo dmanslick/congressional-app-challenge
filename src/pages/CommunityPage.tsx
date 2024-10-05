@@ -100,14 +100,14 @@ export default function CommunityPage() {
                         <ModalHeader>Create Post</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <label htmlFor='title' className='visually-hidden'>Post title</label>
-                            <Input type='text' placeholder='Title' id='title' mb='1.5rem' onChange={e => setTitle(e.target.value)} />
+                            <label htmlFor='title'>Post title</label>
+                            <Input type='text' placeholder='Title' id='title' mb='1.5rem' mt={1} onChange={e => setTitle(e.target.value)} />
 
-                            <label htmlFor='tags' className='visually-hidden'>Post tags</label>
-                            <Input type='text' placeholder='Tags (ex: tag1, tag2, tag3, ...)' id='tags' mb='1.5rem' onChange={e => setTags(e.target.value.split(/,\s*/))} />
+                            <label htmlFor='tags'>Post tags</label>
+                            <Input type='text' placeholder='Tags (ex: tag1, tag2, tag3, ...)' id='tags' mb='1.5rem' mt={1} onChange={e => setTags(e.target.value.split(/,\s*/))} />
 
-                            <label htmlFor='content' className='visually-hidden'>Post Content</label>
-                            <Textarea placeholder='My post' id='content' onChange={e => setContent(e.target.value)} />
+                            <label htmlFor='content'>Post Content</label>
+                            <Textarea placeholder='My post' id='content' mt={1} onChange={e => setContent(e.target.value)} />
                         </ModalBody>
 
                         <ModalFooter>

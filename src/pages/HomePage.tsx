@@ -31,7 +31,7 @@ export default function HomePage() {
                         </VStack>
                     </Box>
 
-                    <Heading size='xl' textAlign='center' py={6} color={textColor}>
+                    <Heading size='xl' textAlign='center' py={10} color={textColor}>
                         Our Features
                     </Heading>
 

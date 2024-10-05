@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth'
 import { auth, db } from './firebase'
 import { doc, setDoc, Timestamp } from 'firebase/firestore'
 
@@ -18,4 +18,8 @@ export const register = async (data: RegisterArgs) => {
         displayName: data['Name'],
     })
     await setDoc(doc(db, 'profiles', uid), { ...data, ...{ creationDate: Timestamp.fromDate(new Date()) } })
+}
+
+export const resetPassword = (email: string) => {
+    return sendPasswordResetEmail(auth, email)
 }

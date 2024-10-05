@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, IconButton, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { Button, Card, CardBody, CardHeader, IconButton, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Portal, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
 import { cardMaxW } from '../utils/constants'
 import { useUser } from '../firebase/useUser'
 import { EllipsisVerticalIcon } from 'lucide-react'
@@ -11,6 +11,7 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
     const { user } = useUser()
     const queryClient = useQueryClient()
     const editCommentModal = useDisclosure()
+    const toast = useToast()
 
     const { mutate: mutateDeleteComment } = useMutation({
         mutationFn: deleteComment,
@@ -18,6 +19,11 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
             queryClient.setQueryData(['post', postId], (prev: Post) => {
                 const updatedComments = prev.comments.filter((comment: any) => comment.id != id)
                 return { ...prev, comments: updatedComments }
+            })
+            toast({
+                title: 'Comment Successfully Deleted!',
+                colorScheme: 'green',
+                isClosable: true
             })
         }
     })
@@ -32,6 +38,11 @@ export default function CommentCard({ data, postId }: { data: PostComment, postI
                 return post
             })
             editCommentModal.onClose()
+            toast({
+                title: 'Comment Successfully Edited!',
+                colorScheme: 'green',
+                isClosable: true
+            })
         }
     })
 

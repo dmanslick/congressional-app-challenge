@@ -94,14 +94,12 @@ export default function ChatBotPage() {
                     </Box>
                 </ScaleFade>
             )}
-            <ScaleFade initialScale={0.9} in={true}>
-                <Flex position='fixed' bottom='56px' left='50%' transform='translateX(-50%)' direction='row' gap={2} mb={4} as='form' onSubmit={sendMessage} maxW='400px' width='calc(100vw - 1rem)'>
-                    <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} value={message} />
-                    <Button type='submit' aria-label='Search Icon' colorScheme='purple'>
-                        <SendIcon aria-label='Search Button Icon' />
-                    </Button>
-                </Flex>
-            </ScaleFade>
+            <Flex position='fixed' bottom='56px' left='50%' transform='translateX(-50%)' direction='row' gap={2} mb={4} as='form' onSubmit={sendMessage} maxW='400px' width='calc(100vw - 1rem)'>
+                <Textarea rows={1} placeholder='Message' bg='white' onChange={e => setMessage(e.target.value)} value={message} />
+                <Button type='submit' aria-label='Search Icon' colorScheme='purple'>
+                    <SendIcon aria-label='Search Button Icon' />
+                </Button>
+            </Flex>
         </>
     )
 }

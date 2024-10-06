@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'com.kora.app',
+  appId: 'com.koraAi.app',
   appName: 'Kora',
   webDir: 'dist'
 }

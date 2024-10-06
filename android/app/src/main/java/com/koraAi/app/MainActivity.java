@@ -1,4 +1,4 @@
-package com.kora.app;
+package com.koraAi.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, } from '@google/generative-AI'
+import { GoogleGenerativeAI, } from '@google/generative-ai'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { getChatHistory } from '../utils/getChatHistory'

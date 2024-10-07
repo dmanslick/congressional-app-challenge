@@ -85,7 +85,13 @@ export default function CommunityPage() {
                 <Stack spacing='1rem'>
                     {results ? (
                         <>
-                            {results.length == 0 && <AbsoluteCenter><Text>No Results</Text></AbsoluteCenter>}
+                            {results.length == 0 && (
+                                <Portal>
+                                    <AbsoluteCenter>
+                                        <Text>No Results</Text>
+                                    </AbsoluteCenter>
+                                </Portal>
+                            )}
                             {results.length > 0 && results.map(post => <PostCard {...post} />)}
                         </>
                     ) : (

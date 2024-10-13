@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import * as tf from '@tensorflow/tfjs'
 import { useModel } from '../providers/ModelProvider'
 import { CameraIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 interface Prediction {
     emotion: string
@@ -142,6 +143,9 @@ export default function CameraPage() {
                                 ))}
                                 <Button leftIcon={<CameraIcon />} onClick={takePicture} size='md' mt={4} w='fit-content' colorScheme='purple'>
                                     Take Another Picture
+                                </Button>
+                                <Button as={Link} to='/app/chatbot' size='md' w='fit-content' colorScheme='purple'>
+                                    Ask Kora AI for Insights
                                 </Button>
                             </VStack>
                         </Card>

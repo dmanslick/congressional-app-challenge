@@ -1,7 +1,8 @@
-import { Stack, Input, Button, Box, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel, useToast } from '@chakra-ui/react'
+import { Stack, Input, Button, Box, Link, RadioGroup, FormLabel, FormControl, Radio, TabList, Tab, Tabs, TabPanels, TabPanel, useToast, Flex } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { register } from '../firebase/auth'
+import ContinueButton from '../components/ContinueButton'
 
 const textInputs = [
     'Child Name',
@@ -70,7 +71,10 @@ export default function SignUpPage() {
                                 <Input placeholder='Name' type='text' onChange={handleInput} />
                                 <Input placeholder='Email' type='email' onChange={handleInput} />
                                 <Input placeholder='Password' type='password' onChange={handleInput} />
-                                <Link as={RouterLink} to='/' fontSize='small' color='purple.500' w='fit-content'>Login</Link>
+                                <Flex dir='row' alignItems='center' justifyContent='space-between'>
+                                    <Link as={RouterLink} to='/' fontSize='small' color='purple.500' w='fit-content'>Login</Link>
+                                    <ContinueButton />
+                                </Flex>
                             </Stack>
                         </Box>
                     </TabPanel>
@@ -112,3 +116,4 @@ export default function SignUpPage() {
         </Box>
     )
 }
+

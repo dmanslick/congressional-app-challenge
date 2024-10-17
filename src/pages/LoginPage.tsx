@@ -63,7 +63,7 @@ export default function LoginPage() {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent as='form' onSubmit={handleResetPassword}>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>Reset Password</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <label htmlFor='reset-email'>Your Account's Email</label>
